@@ -1,0 +1,40 @@
+[
+    {
+        "first_name": "Karl Gabriel",
+        "middle_name": "Sandot",
+        "last_name": "Arellano",
+        "username": "admin",
+        "password": "admin",
+        "college_id": null,
+        "role_id": 1
+    },
+    {
+        "first_name": "Clyde",
+        "middle_name": "Calusin",
+        "last_name": "Arellano",
+        "username": "201700263",
+        "password": "arellano",
+        "college_id": 1,
+        "role_id": 3,
+        "year_level": "4th Year"
+    },
+    {
+        "first_name": "Fernando",
+        "middle_name": "R",
+        "last_name": "Gargar",
+        "username": "202000123",
+        "password": "fernando",
+        "college_id": 1,
+        "role_id": 3,
+        "year_level": "4th Year"
+    },
+    {
+        "first_name": "Jean Carrem",
+        "middle_name": "M",
+        "last_name": "Riconalla",
+        "username": "jean",
+        "password": "password",
+        "college_id": 1,
+        "role_id": 2
+    }
+]
