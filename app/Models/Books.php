@@ -54,6 +54,18 @@ class Books extends Model
         return $query->where("college_id", $id);
     }
 
+    public function scopeAccepted($query) {
+        return $query->where("book_status", self::ACCEPTED);
+    }
+
+    public function scopePending($query) {
+        return $query->where("book_status", self::PENDING);
+    }
+
+    public function scopeRejected($query) {
+        return $query->where("book_status", self::REJECTED);
+    }
+
     public function statusText() {
         if ($this->book_status == self::PENDING) {
             return "Pending";

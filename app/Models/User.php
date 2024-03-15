@@ -47,6 +47,18 @@ class User extends Authenticatable
     public function getFirstNameAttribute() {
         return $this->first_name . " " . $this->middle_name[0] . ". " . $this->last_name;
     }
+
+    public function scopeNotVerify($query) {
+        return $query->where("verified_at", null);
+    }
+
+    public function scopeStudent($query) {
+        return $query->where("role_id", Role::STUDENT);
+    }
+
+    public function scopeFaculty($query) {
+        return $query->where("role_id", Role::FACULTY);
+    }
     
     public function college() {
         return $this->belongsTo(College::class);

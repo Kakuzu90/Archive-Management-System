@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\College;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class CollegeSeeder extends Seeder
 {
@@ -13,6 +15,14 @@ class CollegeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $colleges = File::get("database/data/college.json");
+        $json = json_decode($colleges);
+
+        foreach ($json as $item) {
+            College::create([
+                "name" => $item->name,
+                "slug"=> $item->name,
+            ]);
+        }
     }
 }

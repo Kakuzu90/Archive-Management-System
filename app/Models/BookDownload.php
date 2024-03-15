@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasDeletedScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class BookDownload extends Model
 {
@@ -28,5 +29,9 @@ class BookDownload extends Model
 
     public function book() {
         return $this->belongsTo(Books::class);
+    }
+
+    public function scopeIsNotAlreadyDownloaded($query, $id) {
+        return $query->where("book_id", $id)->where("user_id", Auth::id())->doesnExist();
     }
 }

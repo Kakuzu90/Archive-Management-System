@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BookReview;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            RoleSeeder::class,
+            CollegeSeeder::class,
+            CourseSeeder::class,
+            UserSeeder::class,
+            SettingSeeder::class,
+            BooksSeeder::class,
+            BookReviewSeeder::class,
+            BookDownloadSeeder::class,
+        ]);
     }
 }
