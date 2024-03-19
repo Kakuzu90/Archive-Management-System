@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
             $table->string('year_level', 20)->nullable();
             $table->rememberToken();
+            $table->integer('avatar')->default(1);
             $table->timestamp('verified_at')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

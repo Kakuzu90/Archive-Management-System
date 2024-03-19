@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\College;
 use App\Models\Role;
 use App\Models\Setting;
@@ -26,11 +27,11 @@ class AuthController extends Controller
         $request->validate([
             "username" => "required",
             "password" => "required",
-            "remember" => "nullable",
         ]);
 
         if (Auth::attempt(["username" => $request->username, "password" => $request->password], $request->remember)) {
-            if (Auth::user()->role_id === Role::ADMIN) {
+            $this->audit(ActivityLog::LOGIN, "Login Success");
+            if (in_array(Auth::user()->role_id, [Role::ADMIN, Role::SUPER_ADMIN])) {
                 return redirect()->route("admin.dashboard")->withStatus("welcome");
             }
             if (Auth::user()->role_id === Role::STUDENT) {
@@ -64,6 +65,7 @@ class AuthController extends Controller
             "password" => "required|confirmed",
             "college" => "required|numeric",
             "year" => "required",
+            "avatar" => "required|numeric",
         ]);
 
         $user = User::create([
@@ -75,8 +77,10 @@ class AuthController extends Controller
             "college_id" => $request->college,
             "year_level" => $request->year,
             "role_id" => Role::STUDENT,
+            "avatar" => $request->avatar,
         ]);
 
+        $this->audit(ActivityLog::ADD, "Registered", $user->id);
         $msg = ["Register Complete", "Welcome to the platform " . $user->fullname . ", please wait till the administrator to verify your account."];
 
         return redirect()->route("login")->with("success", $msg);
@@ -90,6 +94,7 @@ class AuthController extends Controller
             "username" => ["required", new UniqueEntry("users", "username")],
             "password" => "required|confirmed",
             "college" => "required|numeric",
+            "avatar" => "required|numeric",
         ]);
 
         $user = User::create([
@@ -100,16 +105,18 @@ class AuthController extends Controller
             "password" => $request->password,
             "college_id" => $request->college,
             "role_id" => Role::FACULTY,
+            "avatar" => $request->avatar,
         ]);
 
+        $this->audit(ActivityLog::ADD, "Registered", $user->id);
         $msg = ["Register Complete", "Welcome to the platform " . $user->fullname . ", please wait till the administrator to verify your account."];
 
         return redirect()->route("login")->with("success", $msg);
     }
 
     public function logout() {
+        $this->audit(ActivityLog::LOGOUT, "Logout Success");
         Auth::logout();
-
         return redirect()->route("login")->withErrors(["logout" => "You have successfully logout to the platform."]);
     }
 }

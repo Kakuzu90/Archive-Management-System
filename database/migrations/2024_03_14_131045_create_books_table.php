@@ -18,10 +18,13 @@ class CreateBooksTable extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('slug')->nullable();
-            $table->text('book_type');
+            $table->text('book_type')->nullable();
+            $table->text('authors')->nullable();
             $table->longText('abstract')->nullable();
             $table->foreignId('college_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
             $table->timestamp('published_at')->nullable();
+            $table->integer('uploaded_by')->nullable();
             $table->integer('book_status')->default(1);
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

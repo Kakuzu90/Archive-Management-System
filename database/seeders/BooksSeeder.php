@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Books;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 
 class BooksSeeder extends Seeder
@@ -24,7 +25,11 @@ class BooksSeeder extends Seeder
                 "slug" => $item->title,
                 "book_type" => $item->book_type,
                 "user_id" => $item->user_id,
-                "college_id" => $item->college_id 
+                "college_id" => $item->college_id,
+                "course_id" => $item->course_id,
+                "authors" => $item->authors,
+                "uploaded_by" => $item->uploaded_by,
+                "published_at" => Carbon::now(),
             ]);
         }
     }

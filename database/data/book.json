@@ -3,6 +3,9 @@
         "title": "Web-based Ranking Management System for NORSU-BSC Students",
         "user_id": 2,
         "book_type": "thesis",
-        "college_id": 1
+        "college_id": 1,
+        "course_id": 1,
+        "uploaded_by": 3,
+        "authors": "Clyde C. Arellano, April Joy A. Abueva, Sheryl E. Logronio, Gerlyn N. Moncal, Letty T. Ortega"
     }
 ]

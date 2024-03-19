@@ -15,7 +15,7 @@ class User extends Authenticatable
         "first_name", "middle_name", "last_name",
         "username", "password", "college_id",
         "role_id", "year_level", "verified_at",
-        "deleted_at"
+        "deleted_at", "avatar"
     ];
 
     protected $hidden = [
@@ -44,12 +44,24 @@ class User extends Authenticatable
         return $this->attributes["password"] = Hash::make($value);
     }
 
-    public function getFirstNameAttribute() {
+    public function getFullNameAttribute() {
         return $this->first_name . " " . $this->middle_name[0] . ". " . $this->last_name;
     }
 
+    public function getFirstNameAttribute($value) {
+        return $this->attributes["first_name"] = ucwords($value);
+    }
+
+    public function getMiddleNameAttribute($value) {
+        return $this->attributes["middle_name"] = ucwords($value);
+    }
+
+    public function getLastNameAttribute($value) {
+        return $this->attributes["last_name"] = ucwords($value);
+    }
+
     public function scopeNotVerify($query) {
-        return $query->where("verified_at", null);
+        return $query->where("verified_at", null)->where("role_id", "!=", Role::SUPER_ADMIN);
     }
 
     public function scopeStudent($query) {
@@ -59,13 +71,31 @@ class User extends Authenticatable
     public function scopeFaculty($query) {
         return $query->where("role_id", Role::FACULTY);
     }
+
+    public function scopeAdmin($query) {
+        return $query->where("role_id", Role::ADMIN);
+    }
     
     public function college() {
         return $this->belongsTo(College::class);
     }
 
+    public function books() {
+        return $this->hasMany(Books::class);
+    }
+
     public function role() {
         return $this->belongsTo(Role::class);
+    }
+
+    public function roleColor() {
+        if ($this->role_id === Role::ADMIN) {
+            return "secondary";
+        }
+        if ($this->role_id === Role::FACULTY) {
+            return "info";
+        }
+        return "primary";
     }
 
     public function accountText() {
@@ -80,5 +110,9 @@ class User extends Authenticatable
             return "success";
         }
         return "danger";
+    }
+
+    public function avatar() {
+        return asset("assets/img/avatar/avatar-" . $this->avatar . ".png");
     }
 }

@@ -132,7 +132,7 @@ class BookController extends Controller
         return redirect()->back()->with("danger", $msg);
     }
 
-    public function review(Books $books) {
-        return view("admin.show.review", compact("books"));
+    public function review(Books $book) {
+        return view("admin.show.review", compact("book"));
     }
 }

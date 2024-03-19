@@ -6,7 +6,8 @@
         "username": "admin",
         "password": "admin",
         "college_id": null,
-        "role_id": 1
+        "role_id": 1,
+        "avatar": 1
     },
     {
         "first_name": "Clyde",
@@ -16,7 +17,8 @@
         "password": "arellano",
         "college_id": 1,
         "role_id": 3,
-        "year_level": "4th Year"
+        "year_level": "4th Year",
+        "avatar": 5
     },
     {
         "first_name": "Fernando",
@@ -26,7 +28,8 @@
         "password": "fernando",
         "college_id": 1,
         "role_id": 3,
-        "year_level": "4th Year"
+        "year_level": "4th Year",
+        "avatar": 4
     },
     {
         "first_name": "Jean Carrem",
@@ -35,6 +38,17 @@
         "username": "jean",
         "password": "password",
         "college_id": 1,
-        "role_id": 2
+        "role_id": 2,
+        "avatar": 3
+    },
+    {
+        "first_name": "Franco",
+        "middle_name": "A",
+        "last_name": "Abequibel",
+        "username": "cokiemonster",
+        "password": "password",
+        "college_id": 1,
+        "role_id": 4,
+        "avatar": 7
     }
 ]

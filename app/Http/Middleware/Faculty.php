@@ -18,10 +18,6 @@ class Faculty
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->expectsJson()) {
-            return response()->json(["message" => "Not Found"], 404);
-        }
-
         if (Auth::user()->role_id !== Role::FACULTY) {
             abort(404);
         }

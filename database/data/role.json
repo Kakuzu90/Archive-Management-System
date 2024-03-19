@@ -1,11 +1,14 @@
 [
     {
-        "name": "admin"
+        "name": "super admin"
     },
     {
         "name": "faculty"
     },
     {
         "name": "student"
+    },
+    {
+        "name": "admin"
     }
 ]

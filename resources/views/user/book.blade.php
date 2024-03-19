@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts.default")
 
 @section("title")
     @if (Session::get("status"))
@@ -9,13 +9,16 @@
 @endsection
 
 @section("links")
-    
+<link rel="stylesheet" href="{{ asset("assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css") }}">
+<link rel="stylesheet" href="{{ asset("assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css") }}">
+<link rel="stylesheet" href="{{ asset("assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css") }}">
 @endsection
 
 @section("content")
-<h4 class="py-3 mb-4"><span class="text-muted fw-light">Capstone / Books /</span> {{ $book->title }}</h4>
-
-<div class="row mb-4 g-4">
+<a href="{{ route("student.home") }}">
+    <i class="mdi mdi-arrow-left"></i> Go back
+</a>
+<div class="row mb-4 mt-1 g-4">
     <div class="col-md-6">
         <div class="card h-100">
             <div class="card-body">
@@ -131,7 +134,7 @@
         <h4 class="mb-0 card-title">Reviews</h4>
     </div>
     <div class="card-datatable table-responsive pt-0">
-        <table class="datatable-init table ">
+        <table class="datatable-init table table-hover table-bordered">
             <thead>
                 <tr>
                     <th class="text-start">Researcher Name</th>
@@ -173,6 +176,7 @@
 @endsection
 
 @section("scripts")
+    <script src="{{ asset("assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js") }}"></script>
     <script>
          $(".datatable-init").DataTable({
             order: [[3, "desc"], [2, "desc"]]

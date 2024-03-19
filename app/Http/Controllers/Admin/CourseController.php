@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Course;
 use App\Models\College;
 use App\Rules\UniqueEntry;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
@@ -43,6 +44,7 @@ class CourseController extends Controller
         ]);
 
         $msg = ["New Course Added", $request->name . " has been added to the course data."];
+        $this->audit(ActivityLog::ADD, $msg[1]);
 
         return redirect()->back()->with("success", $msg);
     }
@@ -78,9 +80,13 @@ class CourseController extends Controller
             "college_id" => $request->college,
         ]);
 
-        $course->wasChanged() && $msg = ["Course Updated", $request->name . " data has been update."];
+        if ($course->wasChanged()) {
+            $msg = ["Course Updated", $request->name . " data has been update."];
+            $this->audit(ActivityLog::EDIT, $msg[1]);
+            return redirect()->back()->with("info", $msg);
+        }
 
-        return redirect()->back()->with("info", $msg);
+        return redirect()->back();
     }
 
     /**
@@ -100,8 +106,8 @@ class CourseController extends Controller
         }
 
         $course->update(["deleted_at" => Carbon::now()]);
-
         $msg = ["Course Deleted", $course->name . " has been removed to the course data."];
+        $this->audit(ActivityLog::DELETE, $msg[1]);
         return redirect()->back()->with("danger", $msg);
     }
 }

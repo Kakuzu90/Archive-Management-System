@@ -16,6 +16,9 @@
         max-width: 95%;
       }
     }
+    .select2-selection__rendered .avatar img {
+      margin-top: -19px;
+    }
   </style>
 @endsection
 
@@ -23,9 +26,7 @@
 <div class="position-relative">
     <div class="authentication-wrapper authentication-basic container-p-y">
       <div class="authentication-inner py-4">
-        <!-- Login -->
         <div class="card p-2">
-          <!-- Logo -->
           <div class="app-brand justify-content-center mt-5">
             <a href="{{ route("index") }}" class="app-brand-link gap-2">
               <span class="app-brand-logo demo">
@@ -34,7 +35,6 @@
               <span class="app-brand-text demo text-heading fw-bold">Capstone Project Hub</span>
             </a>
           </div>
-          <!-- /Logo -->
 
           <div class="card-body mt-2">
             <h4 class="mb-2">Join Now!</h4>
@@ -54,6 +54,7 @@
                       class="form-control"
                       placeholder="Enter your first name"
                       autofocus
+                      required
                       />
                     <label for="first_name">First Name</label>
                   </div>
@@ -66,7 +67,7 @@
                       id="middle_name"
                       name="middle_name"
                       class="form-control"
-                      placeholder="Enter you middle name" />
+                      placeholder="Enter you middle name" required />
                     <label for="middle_name">Middle Name</label>
                   </div>
                 </div>
@@ -78,7 +79,7 @@
                       id="last_name"
                       name="last_name"
                       class="form-control"
-                      placeholder="Enter your last name" />
+                      placeholder="Enter your last name" required />
                     <label for="last_name">Last Name</label>
                   </div>
                 </div>
@@ -91,7 +92,7 @@
                       name="username"
                       class="form-control input-mask"
                       maxlength="9"
-                      placeholder="Enter your student id" />
+                      placeholder="Enter your student id" required />
                     <label for="username">Student ID</label>
                   </div>
                 </div>
@@ -106,7 +107,7 @@
                           class="form-control"
                           name="password"
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                          aria-describedby="password" />
+                          aria-describedby="password" required />
                         <label for="password">Password</label>
                       </div>
                       <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
@@ -124,7 +125,7 @@
                           class="form-control"
                           name="password_confirmation"
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                          aria-describedby="password_confirmation" />
+                          aria-describedby="password_confirmation" required />
                         <label for="password_confirmation">Confirm Password</label>
                       </div>
                       <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
@@ -138,6 +139,7 @@
                       class="select2 form-select form-select-lg"
                       id="college"
                       name="college"
+                      required
                     >
                       @foreach ($colleges as $item)
                         <option value="{{ $item->id }}">
@@ -145,7 +147,7 @@
                         </option>
                       @endforeach
                     </select>
-
+                    <label for="college">College</label>
                   </div>
                 </div>
 
@@ -155,6 +157,7 @@
                       class="select2 form-select form-select-lg"
                       id="year"
                       name="year"
+                      required
                     >
                       <option value="1st Year">1st Year</option>
                       <option value="2nd Year">2nd Year</option>
@@ -162,7 +165,26 @@
                       <option value="4th Year">4th Year</option>
                       <option value="5th Year">5th Year</option>
                     </select>
+                    <label for="year">Year Level</label>
+                  </div>
+                </div>
 
+                <div class="col-sm-12">
+                  <div class="form-floating form-floating-outline">
+                    <select
+                      class="select2-avatar form-select form-select-lg"
+                      id="avatar"
+                      name="avatar"
+                      required
+                    >
+                      <option value="2" data-src="{{ asset("assets/img/avatar/avatar-2.png") }}">Avatar 1</option>
+                      <option value="3" data-src="{{ asset("assets/img/avatar/avatar-3.png") }}">Avatar 2</option>
+                      <option value="4" data-src="{{ asset("assets/img/avatar/avatar-4.png") }}">Avatar 3</option>
+                      <option value="5" data-src="{{ asset("assets/img/avatar/avatar-5.png") }}">Avatar 4</option>
+                      <option value="6" data-src="{{ asset("assets/img/avatar/avatar-6.png") }}">Avatar 5</option>
+                      <option value="7" data-src="{{ asset("assets/img/avatar/avatar-7.png") }}">Avatar 6</option>
+                    </select>
+                    <label for="avatar">Avatar</label>
                   </div>
                 </div>
 
@@ -186,7 +208,7 @@
             <p class="text-center">
               <span>Already have an account?</span>
               <a href="{{ route("login") }}">
-                <span>Sign in instead</span>
+                <span>Login instead</span>
               </a>
             </p>
 
@@ -210,6 +232,7 @@
   <script src="{{ asset("assets/vendor/libs/cleavejs/cleave.js") }}"></script>
   <script>
       const select2 = $(".select2");
+      const select2Avatars = $(".select2-avatar")
       if (select2.length) {
         select2.each(function () {
           var $this = $(this);
@@ -221,6 +244,27 @@
           });
         });
       }
+
+      function renderIcons(option) {
+        if (!option.id) {
+          return option.text;
+        }
+
+        var $icon = "<div class='d-flex justify-content-start align-items-center'><div class='avatar avatar-sm me-1'><img src='"+ $(option.element).data('src') +"' class='rounded-circle' alt='Avatar' /></div>" + option.text + "</div>";
+
+        return $icon;
+      }
+      select2Focus(select2Avatars);
+        select2Avatars.wrap('<div class="position-relative"></div>').select2({
+          minimumResultsForSearch: Infinity,
+          placeholder: 'Select avatar',
+          dropdownParent: select2Avatars.parent(),
+          templateResult: renderIcons,
+          templateSelection: renderIcons,
+          escapeMarkup: function (es) {
+            return es;
+          }
+      });
 
       new Cleave($(".input-mask"), {
         numeral: true,

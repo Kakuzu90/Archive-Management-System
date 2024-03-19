@@ -1,51 +1,18 @@
-@extends("layouts.auth")
-
-@section("title")
-    Register
-@endsection
-
-@section("links")
-  <link rel="stylesheet" href="{{ asset("assets/vendor/libs/bootstrap-select/bootstrap-select.css") }}">
-  <link rel="stylesheet" href="{{ asset("assets/vendor/libs/select2/select2.css") }}">
-  <style>
-    .authentication-wrapper.authentication-basic .authentication-inner {
-      max-width: 650px;
-    }
-    @media (max-width: 450px) {
-      .authentication-wrapper.authentication-basic .authentication-inner {
-        max-width: 95%;
-      }
-    }
-    .select2-selection__rendered .avatar img {
-      margin-top: -19px;
-    }
-  </style>
-@endsection
-
-@section("content")
-<div class="position-relative">
-    <div class="authentication-wrapper authentication-basic container-p-y">
-      <div class="authentication-inner py-4">
-        <div class="card p-2">
-
-          <div class="app-brand justify-content-center mt-5">
-            <a href="{{ route("index") }}" class="app-brand-link gap-2">
-              <span class="app-brand-logo demo">
-                <img src="{{ asset("favicon.png") }}" width="35" height="35" alt="Brand Logo" />
-              </span>
-              <span class="app-brand-text demo text-heading fw-bold">Capstone Project Hub</span>
-            </a>
-          </div>
-
-
-          <div class="card-body mt-2">
-            <h4 class="mb-2">Join Now!</h4>
-            <p class="mb-3">Register to experience streamlined organization and secure access for your capstone projects.</p>
-
-            <form id="formAuthentication" class="mb-3" action="{{ route("register.faculty") }}" method="POST">
-              @csrf
-
-              <div class="row g-3">
+<div class="modal fade" id="add" tabindex="-1" aria-hidden="true" aria-describedby="addTitle">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addTitle">New Admin</h4>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+            </div>
+        <form action="{{ route("admin.admins.store") }}" method="POST">
+        @csrf
+        <div class="modal-body">
+            <div class="row g-3">
 
                 <div class="col-sm-6">
                   <div class="form-floating form-floating-outline">
@@ -107,7 +74,7 @@
                           class="form-control"
                           name="password"
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                          aria-describedby="password" />
+                          aria-describedby="password" required />
                         <label for="password">Password</label>
                       </div>
                       <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
@@ -125,7 +92,7 @@
                           class="form-control"
                           name="password_confirmation"
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                          aria-describedby="password_confirmation" />
+                          aria-describedby="password_confirmation" required />
                         <label for="password_confirmation">Confirm Password</label>
                       </div>
                       <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
@@ -140,7 +107,7 @@
                       id="college"
                       name="college"
                     >
-                      @foreach ($colleges as $item)
+                      @foreach (getColleges() as $item)
                         <option value="{{ $item->id }}">
                           {{ $item->name }}
                         </option>
@@ -169,80 +136,15 @@
                   </div>
                 </div>
 
-              </div>
-
-              <div class="my-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
-                  <label class="form-check-label" for="terms-conditions">
-                    I agree to
-                    <a href="javascript:void(0);">privacy policy & terms</a>
-                  </label>
-                </div>
-              </div>
-
-              <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
-              </div>
-            </form>
-
-            <p class="text-center">
-              <span>Already have an account?</span>
-              <a href="{{ route("login") }}">
-                <span>Login instead</span>
-              </a>
-            </p>
-
-          </div>
+            </div>
         </div>
-
-        <img
-          alt="mask"
-          src="{{ asset("assets/img/illustrations/auth-basic-register-mask-light.png") }}"
-          class="authentication-image d-none d-lg-block"
-          data-app-light-img="illustrations/auth-basic-register-mask-light.png"
-          data-app-dark-img="illustrations/auth-basic-register-mask-dark.png" />
-      </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save Admin</button>
+        </div>
+        </form>
+        </div>
     </div>
-  </div>
-@endsection
-
-
-@section("scripts")
-  <script src="{{ asset("assets/vendor/libs/select2/select2.js") }}"></script>
-  <script>
-      const select2 = $(".select2");
-      const select2Avatars = $(".select2-avatar")
-      if (select2.length) {
-        select2.each(function () {
-          var $this = $(this);
-          select2Focus($this);
-          $this.wrap('<div class="position-relative"></div>').select2({
-            minimumResultsForSearch: Infinity,
-            placeholder: 'Select value',
-            dropdownParent: $this.parent()
-          });
-        });
-      }
-      function renderIcons(option) {
-        if (!option.id) {
-          return option.text;
-        }
-
-        var $icon = "<div class='d-flex justify-content-start align-items-center'><div class='avatar avatar-sm me-1'><img src='"+ $(option.element).data('src') +"' class='rounded-circle' alt='Avatar' /></div>" + option.text + "</div>";
-
-        return $icon;
-      }
-      select2Focus(select2Avatars);
-        select2Avatars.wrap('<div class="position-relative"></div>').select2({
-          minimumResultsForSearch: Infinity,
-          placeholder: 'Select avatar',
-          dropdownParent: select2Avatars.parent(),
-          templateResult: renderIcons,
-          templateSelection: renderIcons,
-          escapeMarkup: function (es) {
-            return es;
-          }
-      });
-  </script>
-@endsection
+</div>

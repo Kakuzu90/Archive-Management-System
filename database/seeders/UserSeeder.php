@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 
 class UserSeeder extends Seeder
@@ -27,7 +29,9 @@ class UserSeeder extends Seeder
                 "password" => $item->password,
                 "college_id" => $item->college_id,
                 "role_id" => $item->role_id,
-                "year_level" => $item->year_level ?? null
+                "year_level" => $item->year_level ?? null,
+                "avatar" => $item->avatar,
+                "verified_at" => $item->role_id === Role::ADMIN ? Carbon::now() : null,
             ]);
         }
     }

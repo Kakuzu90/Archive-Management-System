@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\College;
 use App\Rules\UniqueEntry;
 use Illuminate\Http\Request;
@@ -34,8 +35,8 @@ class CollegeController extends Controller
         ]);
 
         College::create(["name" => $request->name, "slug" => $request->name]);
-
         $msg = ["New College Added", $request->name . " has been added to the college data."];
+        $this->audit(ActivityLog::ADD, $msg[1]);
 
         return redirect()->back()->with("success", $msg);
     }
@@ -66,9 +67,13 @@ class CollegeController extends Controller
 
         $college->update(["name" => $request->name, "slug" => $request->name]);
 
-        $college->wasChanged() && $msg = ["College Updated", $request->name . " data has been update."];
+        if ($college->wasChanged()) {
+            $msg = ["College Updated", $request->name . " data has been update."];
+            $this->audit(ActivityLog::EDIT, $msg[1]);
+            return redirect()->back()->with("info", $msg);
+        }
 
-        return redirect()->back()->with("info", $msg);
+        return redirect()->back();
     }
 
     /**
@@ -88,8 +93,8 @@ class CollegeController extends Controller
         }
 
         $college->update(["deleted_at" => Carbon::now()]);
-
         $msg = ["College Deleted", $college->name . " has been removed to the college data."];
+        $this->audit(ActivityLog::DELETE, $msg[1]);
         return redirect()->back()->with("danger", $msg);
     }
 }

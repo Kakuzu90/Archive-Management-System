@@ -15,6 +15,7 @@ class DashboardController extends Controller
         $data["pending"] = Books::pending()->count();
         $data["faculty"] = User::faculty()->count();
         $data["student"] = User::student()->count();
+        $data["admin"] = User::admin()->count();
         $table["pending"] = Books::pending()->latest()->get();
         $table["users"] = User::notVerify()->latest()->get();
         return view("admin.dashboard", compact("data", "table"));

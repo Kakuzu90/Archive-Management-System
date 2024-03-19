@@ -11,9 +11,10 @@ class Role extends Model
 {
     use HasFactory, HasDeletedScope;
 
-    public const ADMIN = 1;
+    public const SUPER_ADMIN = 1;
     public const FACULTY = 2;
     public const STUDENT = 3;
+    public const ADMIN = 4;
 
     protected $fillable = [
         "name", "slug", "deleted_at"

@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\CollegeController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Faculty\HomeController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
@@ -49,6 +56,14 @@ Route::middleware("auth")
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
             Route::get("dashboard", DashboardController::class)->name("dashboard");
+            Route::apiResource("colleges", CollegeController::class);
+            Route::apiResource("courses", CourseController::class);
+            Route::get("books/{book}/review", [BookController::class,"review"])->name("books.review");
+            Route::apiResource("books", BookController::class);
+            Route::apiResource("admins", AdminController::class);
+            Route::apiResource("faculty", FacultyController::class);
+            Route::apiResource("students", StudentController::class);
+            Route::get("activity-logs", ActivityLogController::class)->name("activity.index");
 
     });
 
@@ -63,6 +78,7 @@ Route::middleware("auth")
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
             Route::get("home", [StudentHomeController::class,"index"])->name("home");
+            Route::get("book/{book}", [StudentHomeController::class,"book"])->name("book");
 
     });
 
@@ -77,6 +93,7 @@ Route::middleware("auth")
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
             Route::get("home", [HomeController::class,"index"])->name("home");
+
 
     });
 

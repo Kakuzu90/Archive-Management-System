@@ -18,6 +18,7 @@ class Books extends Model
     protected $fillable = [
         "user_id", "title", "slug", "book_type",
         "abstract", "college_id", "published_at",
+        "authors", "course_id", "uploaded_by",
         "book_status", "deleted_at"
     ];
 
@@ -38,12 +39,20 @@ class Books extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function course() {
+        return $this->belongsTo(Course::class);
+    }
+
     public function reviews() {
-        return $this->hasMany(BookReview::class);
+        return $this->hasMany(BookReview::class, "book_id", "id")->latest();
     }
 
     public function downloads() {
-        return $this->hasMany(BookDownload::class);
+        return $this->hasMany(BookDownload::class, "book_id", "id");
+    }
+
+    public function average() {
+        return number_format($this->reviews()->avg("rate"), "1", ".");
     }
 
     public function college() {
@@ -64,6 +73,14 @@ class Books extends Model
 
     public function scopeRejected($query) {
         return $query->where("book_status", self::REJECTED);
+    }
+
+    public function typeArray() {
+        return explode(",", $this->book_type);
+    }
+
+    public function authorArray() {
+        return explode(",", $this->authors);
     }
 
     public function statusText() {

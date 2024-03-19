@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+class SuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!in_array(Auth::user()->role_id, [Role::ADMIN, Role::SUPER_ADMIN])) {
+        if (Auth::user()->role_id !== Role::SUPER_ADMIN) {
             abort(404);
         }
 
