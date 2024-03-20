@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\UniqueEntry;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 
 class StudentController extends Controller
 {
@@ -38,6 +39,7 @@ class StudentController extends Controller
             "password" => "required|confirmed",
             "college" => "required|numeric",
             "year" => "required",
+            "avatar" => "required|numeric",
         ]);
 
         $user = User::create([
@@ -50,10 +52,11 @@ class StudentController extends Controller
             "college_id" => $request->college,
             "role_id" => Role::STUDENT,
             "verified_at" => Carbon::now(),
+            "avatar" => $request->avatar,
         ]);
 
         $msg = ["New Student Added", $user->fullname . " has been added to the student data."];
-
+        $this->audit(ActivityLog::ADD, $msg[1]);
         return redirect()->back()->with("success", $msg);
     }
 
@@ -85,6 +88,7 @@ class StudentController extends Controller
             "password" => "nullable|confirmed",
             "college" => "required|numeric",
             "year" => "required",
+            "avatar" => "required|numeric",
         ]);
 
         $update = [
@@ -100,11 +104,23 @@ class StudentController extends Controller
             $update["password"] = $request->password;
         }
 
+        if ($request->filled("status") && !$student->verified_at) {
+            $update["verified_at"] = Carbon::now();
+        }
+
+        if (!$request->filled("status") && $student->verified_at) {
+            $update["verified_at"] = null;
+        }
+
         $student->update($update);
 
-        $student->wasChanged() && $msg = ["Student Updated", $student->fullname . " data has been update."];
+        if ($student->wasChanged()) {
+            $msg = ["Student Updated", $student->fullname . " data has been update."];
+            $this->audit(ActivityLog::EDIT, $msg[1]);
+            return redirect()->back()->with("info", $msg);
+        }
 
-        return redirect()->back()->with("info", $msg);
+        return redirect()->back();
     }
 
     /**
@@ -124,8 +140,8 @@ class StudentController extends Controller
         }
 
         $student->update(["deleted_at" => Carbon::now()]);
-
         $msg = ["Student Deleted", $student->name . " has been removed to the student data."];
+        $this->audit(ActivityLog::DELETE, $msg[1]);
         return redirect()->back()->with("danger", $msg);
     }
 }
