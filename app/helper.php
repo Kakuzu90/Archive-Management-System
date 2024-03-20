@@ -27,7 +27,6 @@ if (!function_exists("smartRoute")) {
     }
 }
 
-
 if (!function_exists("getBooks")) {
     function getBooks() {
         return Books::where("college_id", Auth::user()->college_id)->latest()->get();

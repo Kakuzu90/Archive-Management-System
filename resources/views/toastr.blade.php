@@ -1,7 +1,7 @@
 <script>
 
     @if (Session::get('status'))
-        toastr['success']('You have successfully logged in to Capstone Project Hub. Now you can start to explore!', '👋 Welcome back {{ auth()->user()->fullname }}!', {
+        toastr['success']('You have successfully logged in to Capstone Project Hub. Now you can start to explore!', '👋 Welcome back {{ auth()->user()->last_name }}!', {
             positionClass: 'toast-bottom-right',
             closeButton: true,
             tapToDismiss: false,

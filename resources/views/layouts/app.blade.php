@@ -80,25 +80,27 @@
                         <div>Dashboard</div>
                       </a>
                     </li>
+                  
+                  @superadmin
+                  <li class="menu-header fw-medium mt-4">
+                    <span class="menu-header-text">Informations</span>
+                  </li>
 
-                    <li class="menu-header fw-medium mt-4">
-                      <span class="menu-header-text">Informations</span>
-                    </li>
+                  <li class="menu-item {{ isActive("admin.colleges.index") ? 'active' : null }}">
+                      <a href="{{ route("admin.colleges.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons mdi mdi-domain"></i>
+                        <div>Colleges</div>
+                      </a>
+                  </li>
 
-                    <li class="menu-item {{ isActive("admin.colleges.index") ? 'active' : null }}">
-                        <a href="{{ route("admin.colleges.index") }}" class="menu-link">
-                          <i class="menu-icon tf-icons mdi mdi-domain"></i>
-                          <div>Colleges</div>
-                        </a>
-                    </li>
-
-                    <li class="menu-item {{ isActive("admin.courses.index") ? 'active' : null }}">
-                        <a href="{{ route("admin.courses.index") }}" class="menu-link">
-                          <i class="menu-icon tf-icons mdi mdi-tie"></i>
-                          <div>Courses</div>
-                        </a>
-                    </li>
-                    
+                  <li class="menu-item {{ isActive("admin.courses.index") ? 'active' : null }}">
+                      <a href="{{ route("admin.courses.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons mdi mdi-tie"></i>
+                        <div>Courses</div>
+                      </a>
+                  </li>
+                  @endsuperadmin
+                  
                     <li class="menu-header fw-medium mt-4">
                       <span class="menu-header-text">Capstone</span>
                     </li>
@@ -114,12 +116,14 @@
                       <span class="menu-header-text">Users</span>
                     </li>
 
+                    @superadmin
                     <li class="menu-item {{ isActive("admin.admins.index") ? 'active' : null }}">
                       <a href="{{ route("admin.admins.index") }}" class="menu-link">
                         <i class="menu-icon tf-icons mdi mdi-account-cowboy-hat"></i>
                         <div>Admins</div>
                       </a>
                     </li>
+                    @endsuperadmin   
 
                     <li class="menu-item {{ isActive("admin.faculty.index") ? 'active' : null }}">
                         <a href="{{ route("admin.faculty.index") }}" class="menu-link">
