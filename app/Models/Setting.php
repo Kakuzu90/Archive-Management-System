@@ -10,8 +10,6 @@ class Setting extends Model
 {
     use HasFactory, HasDeletedScope;
 
-    public const STUDENT = 1;
-    public const FACULTY = 2;
     public const ABOUT = 3;
     public const TERMS = 4;
 
@@ -26,14 +24,6 @@ class Setting extends Model
     protected $casts = [
         "deleted_at" => "date"
     ];
-
-    public function scopeStudent($query) {
-        return $query->where("setting_type", self::STUDENT);
-    }
-
-    public function scopeFaculty($query) {
-        return $query->where("setting_type", self::FACULTY);
-    }
 
     public function scopeAbout($query) {
         return $query->where("setting_type", self::ABOUT);

@@ -7,6 +7,7 @@ use App\Rules\UniqueEntry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -17,7 +18,11 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Books::latest()->get();
+        if (Auth::user()->isAdmin()) {
+            $books = Books::where("college_id", Auth::user()->college_id)->latest()->get();
+        }else {
+            $books = Books::latest()->get();
+        }
         return view("admin.book", compact("books"));
     }
 
@@ -31,7 +36,7 @@ class BookController extends Controller
     {
         $request->validate([
             "user" => "required|numeric",
-            "file" => "required|mimes:zip",
+            "file" => "required|mimes:pdf",
             "title" => ["required", new UniqueEntry("books", "title")],
             "book_type" => "required",
             "college" => "required|numeric",
@@ -51,7 +56,7 @@ class BookController extends Controller
         ]);
 
         if ($request->hasFile("file")) {
-            $filename = $book->id . ".zip";
+            $filename = $book->id . ".pdf";
             $request->file("file")->store("capstone", $filename, "local");
         }
 
@@ -82,7 +87,7 @@ class BookController extends Controller
     {
         $request->validate([
             "user" => "required|numeric",
-            "file" => "nullable|mimes:zip",
+            "file" => "nullable|mimes:pdf",
             "title" => ["required", new UniqueEntry("books", "title", $books->id)],
             "book_type" => "required",
             "college" => "required|numeric",
@@ -101,7 +106,7 @@ class BookController extends Controller
         ]);
 
         if ($request->hasFile("file")) {
-            $filename = $books->id . ".zip";
+            $filename = $books->id . ".pdf";
             $request->file("file")->store("capstone", $filename, "local");
         }
 

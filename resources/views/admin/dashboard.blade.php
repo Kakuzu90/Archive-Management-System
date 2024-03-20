@@ -31,9 +31,11 @@
     <div class="col-xl-3 col-lg-4 col-sm-6">
         <x-widget title="Total Faculty" icon="mdi-account-tie-hat" color="info" :count="$data['faculty']" />
     </div>
+    @superadmin
     <div class="col-xl-3 col-lg-4 col-sm-6">
         <x-widget title="Total Admin" icon="mdi-account-cowboy-hat" color="secondary" :count="$data['admin']" />
     </div>
+    @endsuperadmin
 </div>
 
 <div class="card mt-4">

@@ -50,4 +50,24 @@
         });
     @enderror
 
+    @error("password")
+    toastr['error']('{{ $message }}', 'Password Error!', {
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+            tapToDismiss: false,
+            progressBar: true,
+            rtl: false
+        });
+    @enderror
+
+    @error("username")
+    toastr['error']('{{ $message }}', 'Username Duplicate!', {
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+            tapToDismiss: false,
+            progressBar: true,
+            rtl: false
+        });
+    @enderror
+
 </script>

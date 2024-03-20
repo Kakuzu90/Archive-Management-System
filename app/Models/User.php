@@ -79,6 +79,10 @@ class User extends Authenticatable
     public function isSuperAdmin() {
         return $this->role_id === Role::SUPER_ADMIN;
     }
+
+    public function isAdmin() {
+        return $this->role_id === Role::ADMIN;
+    }
     
     public function college() {
         return $this->belongsTo(College::class);

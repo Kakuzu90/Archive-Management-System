@@ -160,7 +160,7 @@
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <button type="submit" class="btn btn-primary">Save Faculty</button>
+            <button type="submit" class="btn btn-primary">Save Student</button>
         </div>
         </form>
         </div>

@@ -59,9 +59,9 @@ class Books extends Model
         return $this->belongsTo(College::class);
     }
 
-    public function scopeByCollege($query, $id) {
-        return $query->where("college_id", $id);
-    }
+    // public function scopeByCollege($query, $id) {
+    //     return $query->where("college_id", $id);
+    // }
 
     public function scopeAccepted($query) {
         return $query->where("book_status", self::ACCEPTED);

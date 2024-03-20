@@ -187,12 +187,29 @@
                               <li>
                                 <div class="dropdown-divider"></div>
                               </li>
+
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route("admin.profile.index") }}">
                                   <i class="mdi mdi-account-outline me-2"></i>
                                   <span class="align-middle">My Profile</span>
                                 </a>
                               </li>
+
+                              <li>
+                                <a class="dropdown-item" href="{{ route("admin.profile.logs") }}">
+                                  <i class="mdi mdi-chart-timeline-variant me-2"></i>
+                                  <span class="align-middle">Activity Log</span>
+                                </a>
+                              </li>
+
+                              @superadmin
+                              <li>
+                                <a class="dropdown-item" href="{{ route("admin.settings.index") }}">
+                                  <i class="mdi mdi-cog-outline me-2"></i>
+                                  <span class="align-middle">Settings</span>
+                                </a>
+                              </li>
+                              @endsuperadmin
                               
                               <li>
                                 <div class="dropdown-divider"></div>

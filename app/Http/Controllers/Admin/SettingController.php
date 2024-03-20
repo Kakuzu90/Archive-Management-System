@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -15,24 +16,23 @@ class SettingController extends Controller
 
     public function update(Request $request) {
         $request->validate([
-            "password" => "required"
+            "about" => "required",
+            "terms" => "required"
         ]);
 
-        if (!verifyMe($request->password)) {
-            return redirect()->back()->withErrors(["verify" => "The password is incorrect, please try again!"]);
-        }
+        $about = Setting::about()->first();
+        $terms = Setting::terms()->first();
 
-        $settings = Setting::latest()->get();
-        foreach($settings as $setting) {
-            if ($request->filled($setting->id)) {
-                $model = Setting::where("id", $setting->id)->first();
-                $model->update([
-                    "context" => $request->input($setting->id)
-                ]);
-            }
-        }
+        $about->update([
+            "context" => $request->about,
+        ]);
+
+        $terms->update([
+            "context" => $request->terms
+        ]);
 
         $msg = ["Setting Changed", "You have successfully change the settings data."];
+        $this->audit(ActivityLog::EDIT, "Update system settings");
 
         return redirect()->back()->with("info", $msg);
     }

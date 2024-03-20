@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\CollegeController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Faculty\HomeController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\Student\HomeController as StudentHomeController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Faculty;
 use App\Http\Middleware\Student;
+use App\Http\Middleware\SuperAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,11 +59,24 @@ Route::middleware("auth")
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
             Route::get("dashboard", DashboardController::class)->name("dashboard");
-            Route::apiResource("colleges", CollegeController::class);
-            Route::apiResource("courses", CourseController::class);
+
+            Route::middleware(SuperAdmin::class)->group(function() {
+                Route::apiResource("colleges", CollegeController::class);
+                Route::apiResource("courses", CourseController::class);
+                Route::apiResource("admins", AdminController::class);
+                Route::get("settings", [SettingController::class, "index"])->name("settings.index");
+                Route::put("settings/store", [SettingController::class, "update"])->name("settings.store");
+            });
+
+            Route::controller(ProfileController::class)->group(function() {
+                Route::get("my-profile", "index")->name("profile.index");
+                Route::put("my-profile/general", "general")->name("profile.general");
+                Route::patch("my-profile/password", "password")->name("profile.password");
+                Route::get("my-activity-log", "logs")->name("profile.logs");
+            });
+            
             Route::get("books/{book}/review", [BookController::class,"review"])->name("books.review");
             Route::apiResource("books", BookController::class);
-            Route::apiResource("admins", AdminController::class);
             Route::apiResource("faculty", FacultyController::class);
             Route::apiResource("students", StudentController::class);
             Route::get("activity-logs", ActivityLogController::class)->name("activity.index");

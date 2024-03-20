@@ -1,15 +1,5 @@
 [
     {
-        "name": "Student Portal",
-        "context": "closed",
-        "setting_type": 1
-    },
-    {
-        "name": "Faculty Portal",
-        "context": "closed",
-        "setting_type": 2
-    },
-    {
         "name": "System About",
         "context": "about the system",
         "setting_type": 3
