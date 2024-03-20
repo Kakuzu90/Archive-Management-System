@@ -104,7 +104,9 @@
 @section("scripts")
 <script src="{{ asset("assets/vendor/libs/select2/select2.js") }}"></script>
 <script>
-    $(".datatable-init").DataTable();
+    $(".datatable-init").DataTable({
+        order: [[1, "asc"], [3, "asc"], [4, "asc"], [0, "asc"]]
+    });
     const select2 = $(".select2");
     const select2Avatars = $(".select2-avatar")
     if (select2.length) {
