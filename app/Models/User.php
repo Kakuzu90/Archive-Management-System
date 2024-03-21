@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasDeletedScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
@@ -61,19 +62,35 @@ class User extends Authenticatable
     }
 
     public function scopeNotVerify($query) {
-        return $query->where("verified_at", null)->where("role_id", "!=", Role::SUPER_ADMIN);
+        $query->where("verified_at", null)->where("role_id", "!=", Role::SUPER_ADMIN);
+        if (Auth::user()->isAdmin()) {
+            $query->where("college_id", Auth::user()->college_id);
+        }
+        return $query;
     }
 
     public function scopeStudent($query) {
-        return $query->where("role_id", Role::STUDENT);
+        $query->where("role_id", Role::STUDENT);
+        if (Auth::user()->isAdmin()) {
+            $query->where("college_id", Auth::user()->college_id);
+        }
+        return $query;
     }
 
     public function scopeFaculty($query) {
-        return $query->where("role_id", Role::FACULTY);
+        $query->where("role_id", Role::FACULTY);
+        if (Auth::user()->isAdmin()) {
+            $query->where("college_id", Auth::user()->college_id);
+        }
+        return $query;
     }
 
     public function scopeAdmin($query) {
-        return $query->where("role_id", Role::ADMIN);
+        $query->where("role_id", Role::ADMIN);
+        if (Auth::user()->isAdmin()) {
+            $query->where("college_id", Auth::user()->college_id);
+        }
+        return $query;
     }
 
     public function isSuperAdmin() {

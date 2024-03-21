@@ -16,7 +16,7 @@
     <div class="row justify-content-center">
         @forelse (getBooks() as $item)
         <div class="col-md-4">
-            <div class="card">
+            <div class="card h-100">
                 <img class="card-img-top" src="{{ asset("assets/img/pages/profile-banner.png") }}" alt="Banner Image" />
                 <div class="card-body">
                     <h6 class="card-title text-center text-primary">{{ $item->title }}</h6>

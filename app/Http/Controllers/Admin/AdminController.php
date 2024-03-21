@@ -112,7 +112,7 @@ class AdminController extends Controller
         $admin->update($update);
 
         if ($admin->wasChanged()) {
-            $msg = ["Admin Updated", $admin->fullname . " data has been update."];
+            $msg = ["Admin Updated", $admin->fullname . " data has been updated."];
             $this->audit(ActivityLog::EDIT, $msg[1]);
             return redirect()->back()->with("info", $msg);
         }

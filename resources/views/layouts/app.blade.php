@@ -105,7 +105,7 @@
                       <span class="menu-header-text">Capstone</span>
                     </li>
 
-                    <li class="menu-item {{ isActive("admin.books.index|admin.books.review") ? 'active' : null }}">
+                    <li class="menu-item {{ isActive("admin.books.index|admin.books.review|admin.books.create|admin.books.edit") ? 'active' : null }}">
                         <a href="{{ route("admin.books.index") }}" class="menu-link">
                           <i class="menu-icon tf-icons mdi mdi-book-account"></i>
                           <div>Books</div>
@@ -240,7 +240,7 @@
                               <script>
                                 document.write(new Date().getFullYear());
                               </script>
-                              , Archive Management System
+                              , Archive Management System, Alright Reserved.
                             </div>
                             <div class="d-none d-lg-inline-block">
                               <a
@@ -269,11 +269,12 @@
     <script src="{{ asset("assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js") }}"></script>
     <script src="{{ asset("assets/vendor/libs/hammer/hammer.js") }}"></script>
     <script src="{{ asset("assets/vendor/js/menu.js") }}"></script>
-    <script src="{{ asset("assets/js/main.js") }}"></script>
 
     <script src="{{ asset("assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js") }}"></script>
     <script src="{{ asset("assets/vendor/libs/toastr/toastr.js") }}"></script>
     @include("toastr")
     @yield("scripts")
+
+    <script src="{{ asset("assets/js/main.js") }}"></script>
 </body>
 </html>

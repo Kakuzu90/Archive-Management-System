@@ -9,7 +9,14 @@
 @endsection
 
 @section("links")
-    
+    <style>
+        @media (max-width: 575.98px) {
+            .widget-separator .border-shift.border-end {
+                border-right: none !important;
+                border-left: none !important;
+            }
+        }
+    </style>
 @endsection
 
 @section("content")
@@ -18,23 +25,49 @@
 <div class="row mb-4 g-4">
     <div class="col-md-6">
         <div class="card h-100">
-            <div class="card-body">
-                <h4 class="mb-2 text-nowrap">Book Details</h4>
-                <p class="mb-0">
-                    <span class="text-primary">Uploader Name: </span> <span>{{ $book->user->fullname }}</span>  
-                  </p>
-                <p class="mb-0">
-                  <span class="text-primary">College: </span> <span>{{ $book->college->name }}</span>  
-                </p>
-                <p class="mb-0">
-                    <span class="text-primary">Book Type: </span> @foreach ($book->typeArray() as $type) <span class="badge bg-primary text-uppercase">{{ $type }}</span>  @endforeach 
-                </p>
-                <p class="mb-0">
-                    <span class="text-primary">Date Published: </span> {{ $book->published_at->format("F d, Y") }}
-                </p>
-                <p class="mb-0">
-                    <span class="text-primary">Book Status: </span> <span class="badge bg-{{ $book->statusColor() }}">{{ $book->statusText() }}</span>
-                </p>
+            <div class="card-body row widget-separator">
+                <div class="col-sm-5 border-shift border-end text-center">
+                    <img src="{{ asset("assets/img/icons/pdf-1.png") }}" height="75" alt="PDF Avataar" />
+                    <small class="d-block mt-2">Uploaded By</small>
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        <div class="avatar avatar-sm me-1">
+                            <img src="{{ $book->user->avatar() }}" class="rounded-circle" alt="User Avatar" />
+                        </div>
+                        <span class="fw-bold text-dark">{{ $book->user->fullname }}</span>
+                    </div>
+                    
+                    @foreach ($book->typeArray() as $item)
+                        <span class="badge bg-primary mb-1">{{ $item }}</span>
+                    @endforeach
+
+                    <hr class="d-sm-none" />
+                </div>
+
+                <div class="col-sm-7">
+                    <div class="d-flex justify-content-end mb-2">
+                        <span class="badge bg-{{ $book->statusColor() }}">
+                            {{ $book->statusText() }}
+                        </span>
+                    </div>
+                    <div class="mb-1 mt-4">
+                        <span class="fw-bold text-dark">Authors Name: </span>
+                        @foreach ($book->authorArray() as $item)
+                            <span class="badge bg-primary mb-1">{{ $item }}</span>
+                        @endforeach
+                    </div>
+                    <p class="mb-1">
+                        <span class="fw-bold text-dark">College: </span>
+                        <span class="text-dark">{{ $book->college->name }}</span>
+                    </p>
+                    <p class="mb-1">
+                        <span class="fw-bold text-dark">Course: </span>
+                        <span class="text-dark">{{ $book->course->name }}</span>
+                    </p>
+                    <p class="mb-1">
+                        <span class="fw-bold text-dark">Date Published: </span>
+                        <span class="text-dark">{{ $book->published_at->format("F d, Y") }}</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -55,77 +88,28 @@
                 </div>
 
                 <div class="col-sm-7 g-2 text-nowrap d-flex flex-column justify-content-between px-4 gap-3">
+
+                    @foreach ($book->getRatingPercentage() as $rate)
                     <div class="d-flex align-items-center gap-3">
-                      <small>5 Star</small>
-                      <div class="progress w-100 rounded" style="height: 10px">
-                        <div
-                          class="progress-bar bg-primary"
-                          role="progressbar"
-                          style="width: 50%"
-                          aria-valuenow="50"
-                          aria-valuemin="0"
-                          aria-valuemax="100"></div>
-                      </div>
-                      <small class="w-px-20 text-end">1</small>
+                        <small>{{ $rate[0] }} Star</small>
+                        <div class="progress w-100 rounded" style="height: 10px">
+                          <div
+                            class="progress-bar bg-primary"
+                            role="progressbar"
+                            style="width: {{ $rate[1] }}%"
+                            aria-valuenow="{{ $rate[1] }}"
+                            aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                        </div>
+                        <small class="w-px-20 text-end">{{ $rate[2] }}</small>
                     </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <small>4 Star</small>
-                        <div class="progress w-100 rounded" style="height: 10px">
-                          <div
-                            class="progress-bar bg-primary"
-                            role="progressbar"
-                            style="width: 50%"
-                            aria-valuenow="50"
-                            aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <small class="w-px-20 text-end">1</small>
-                      </div>
-                      <div class="d-flex align-items-center gap-3">
-                        <small>3 Star</small>
-                        <div class="progress w-100 rounded" style="height: 10px">
-                          <div
-                            class="progress-bar bg-primary"
-                            role="progressbar"
-                            style="width: 0%"
-                            aria-valuenow="0"
-                            aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <small class="w-px-20 text-end">0</small>
-                      </div>
-                      <div class="d-flex align-items-center gap-3">
-                        <small>2 Star</small>
-                        <div class="progress w-100 rounded" style="height: 10px">
-                          <div
-                            class="progress-bar bg-primary"
-                            role="progressbar"
-                            style="width: 0%"
-                            aria-valuenow="0"
-                            aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <small class="w-px-20 text-end">0</small>
-                      </div>
-                      <div class="d-flex align-items-center gap-3">
-                        <small>1 Star</small>
-                        <div class="progress w-100 rounded" style="height: 10px">
-                          <div
-                            class="progress-bar bg-primary"
-                            role="progressbar"
-                            style="width: 0%"
-                            aria-valuenow="0"
-                            aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                        </div>
-                        <small class="w-px-20 text-end">0</small>
-                      </div>
+                    @endforeach
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="card">
     <div class="card-header">
         <h4 class="mb-0 card-title">Reviews</h4>
@@ -135,6 +119,7 @@
             <thead>
                 <tr>
                     <th class="text-start">Researcher Name</th>
+                    <th class="text-center">College</th>
                     <th class="text-center">Comment</th>
                     <th class="text-center">Rate</th>
                     <th class="text-center">Date</th>
@@ -153,6 +138,9 @@
                                     <small>{{ $item->user->username }}</small>
                                 </div>
                             </div>
+                        </td>
+                        <td class="text-center">
+                            <span>{{ $item->user->college->name }}</span>
                         </td>
                         <td>
                             <span>{{ $item->comment }}</span>

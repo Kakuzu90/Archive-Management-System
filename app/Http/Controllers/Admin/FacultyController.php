@@ -112,7 +112,7 @@ class FacultyController extends Controller
         $faculty->update($update);
 
         if ($faculty->wasChanged()) {
-            $msg = ["Faculty Updated", $faculty->fullname . " data has been update."];
+            $msg = ["Faculty Updated", $faculty->fullname . " data has been updated."];
             $this->audit(ActivityLog::EDIT, $msg[1]);
             return redirect()->back()->with("info", $msg);
         }

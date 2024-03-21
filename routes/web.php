@@ -76,7 +76,7 @@ Route::middleware("auth")
             });
             
             Route::get("books/{book}/review", [BookController::class,"review"])->name("books.review");
-            Route::apiResource("books", BookController::class);
+            Route::resource("books", BookController::class);
             Route::apiResource("faculty", FacultyController::class);
             Route::apiResource("students", StudentController::class);
             Route::get("activity-logs", ActivityLogController::class)->name("activity.index");

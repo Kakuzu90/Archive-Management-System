@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use App\Traits\HasDeletedScope;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -55,6 +57,26 @@ class Books extends Model
         return number_format($this->reviews()->avg("rate"), "1", ".");
     }
 
+    public function getRatingPercentage() {
+        $ratingsCount = $this->reviews()
+            ->select(DB::raw('rate, COUNT(*) as count'))
+            ->groupBy('rate')
+            ->orderBy('rate', 'desc')
+            ->pluck('count', 'rate')
+            ->toArray();
+
+        $percentages = [];
+
+        $totalRatings = array_sum($ratingsCount);
+        foreach (range(5, 1) as $star) {
+            $percentage = isset($ratingsCount[$star]) ? round(($ratingsCount[$star] / $totalRatings) * 100) : 0;
+            $count = isset($ratingsCount[$star]) ? $ratingsCount[$star] : 0;
+            $percentages[] = [$star, $percentage, $count];
+        }
+
+        return $percentages;
+    }
+
     public function college() {
         return $this->belongsTo(College::class);
     }
@@ -64,15 +86,27 @@ class Books extends Model
     // }
 
     public function scopeAccepted($query) {
-        return $query->where("book_status", self::ACCEPTED);
+        $query->where("book_status", self::ACCEPTED);
+        if (Auth::user()->isAdmin()) {
+            $query->where("college_id", Auth::user()->college_id);
+        }
+        return $query;
     }
 
     public function scopePending($query) {
-        return $query->where("book_status", self::PENDING);
+        $query->where("book_status", self::PENDING);
+        if (Auth::user()->isAdmin()) {
+            $query->where("college_id", Auth::user()->college_id);
+        }
+        return $query;
     }
 
     public function scopeRejected($query) {
-        return $query->where("book_status", self::REJECTED);
+        $query->where("book_status", self::REJECTED);
+        if (Auth::user()->isAdmin()) {
+            $query->where("college_id", Auth::user()->college_id);
+        }
+        return $query;
     }
 
     public function typeArray() {
@@ -101,6 +135,18 @@ class Books extends Model
         }
 
         return "danger";
+    }
+
+    public function isPending() {
+        return $this->book_status === self::PENDING;
+    }
+
+    public function isAccepted() {
+        return $this->book_status === self::ACCEPTED;
+    }
+
+    public function isRejected() {
+        return $this->book_status === self::REJECTED;
     }
 
 }

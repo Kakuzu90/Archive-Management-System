@@ -18,13 +18,12 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="mb-0 card-title">Books</h4>
-        <button
-            type="button"
+        <a
+            href="{{ route("admin.books.create") }}"
             class="btn btn-sm btn-primary"
-            data-bs-toggle="modal" data-bs-target="#add"
         >
             <i class="mdi mdi-plus-circle me-1"></i> New Book
-        </button>
+        </a>
     </div>
     <div class="card-datatable table-responsive pt-0">
         <table class="datatable-init table">
@@ -49,7 +48,7 @@
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-0">{{ $item->user->fullname }}</h6>
-                                    <small>{{ $item->user->username }}</small>
+                                    <small class="d-block">{{ $item->user->username }}</small>
                                 </div>
                             </div>
                         </td>
@@ -61,7 +60,7 @@
                         </td>
                         <td class="text-center">
                             @foreach ($item->typeArray() as $type)
-                                <span class="badge bg-primary text-uppercase">
+                                <span class="badge bg-primary text-uppercase mb-1">
                                     {{ $type }}
                                 </span>
                             @endforeach
@@ -86,21 +85,21 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item" href="{{ route("admin.books.review", $item->id) }}">
-                                            <i class="mdi mdi-eye-plus"></i> View Details
+                                            <i class="mdi mdi-eye-plus"></i> Reviews
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="edit dropdown-item" href="javascript:void(0);">
+                                        <a class="edit dropdown-item" href="{{ route("api.book.download", $item->id) }}" download>
                                             <i class="mdi mdi-download"></i> Download
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="edit dropdown-item" href="javascript:void(0);">
+                                        <a class="edit dropdown-item" href="{{ route("admin.books.edit", $item->id) }}">
                                             <i class="mdi mdi-pencil"></i> Edit
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="delete dropdown-item" href="javascript:void(0);">
+                                        <a class="delete dropdown-item" data-title="{{ $item->title }}" data-route="{{ route("admin.admins.show", $item->id) }}" href="javascript:void(0);">
                                             <i class="mdi mdi-delete-empty"></i> Delete
                                         </a>
                                     </li>
@@ -119,6 +118,16 @@
 
 @section("scripts")
     <script>
-        $(".datatable-init").DataTable();
+        $(".datatable-init").DataTable({
+            order: [[4, "desc"], [5, "desc"], [2, "asc"]]
+        });
+        $(document).on("click", ".delete", function() {
+            const route = $(this).data("route")
+            const title = $(this).data("title")
+
+            $("#delete .delete_data").text(title)
+            $("#delete form").attr("action", route)
+            $("#delete").modal("show")
+        })
     </script>
 @endsection

@@ -81,7 +81,7 @@ class CourseController extends Controller
         ]);
 
         if ($course->wasChanged()) {
-            $msg = ["Course Updated", $request->name . " data has been update."];
+            $msg = ["Course Updated", $request->name . " data has been updated."];
             $this->audit(ActivityLog::EDIT, $msg[1]);
             return redirect()->back()->with("info", $msg);
         }

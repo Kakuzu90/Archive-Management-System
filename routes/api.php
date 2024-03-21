@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\DownloadController;
+use App\Http\Controllers\Api\SearchController;
+use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::as("api.")
+->middleware("auth")
+->group(function() {
+
+    Route::prefix("admin")->as("admin.")->middleware(Admin::class)->group(function() {
+        Route::get("user/search", [SearchController::class, "search"])->name("search");
+    });
+
+   Route::get("book/{book}/download", DownloadController::class)->name("book.download");
+
 });

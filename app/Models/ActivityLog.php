@@ -42,10 +42,6 @@ class ActivityLog extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeExcludeSuperAdmin($query) {
-        return $query->whereNotIn("user_id", [1, Auth::id()]); // 1 is the account of super admin
-    }
-
     public function typeText() {
         if ($this->type === self::LOGIN) {
             return "Login";

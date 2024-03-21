@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\Books;
-use App\Models\College;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Books;
+use App\Models\Course;
+use App\Models\College;
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists("isActive")) {
@@ -36,5 +37,14 @@ if (!function_exists("getBooks")) {
 if (!function_exists("getColleges")) {
     function getColleges() {
         return College::latest()->get();
+    }
+}
+
+if (!function_exists("getCourses")) {
+    function getCourses() {
+        if (Auth::user()->isAdmin()) {
+            return Course::where("college_id", Auth::user()->college_id)->latest()->get();
+        }
+        return Course::latest()->get();
     }
 }

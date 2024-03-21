@@ -115,7 +115,7 @@ class StudentController extends Controller
         $student->update($update);
 
         if ($student->wasChanged()) {
-            $msg = ["Student Updated", $student->fullname . " data has been update."];
+            $msg = ["Student Updated", $student->fullname . " data has been updated."];
             $this->audit(ActivityLog::EDIT, $msg[1]);
             return redirect()->back()->with("info", $msg);
         }
