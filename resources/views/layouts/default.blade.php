@@ -34,6 +34,15 @@
     <script src="{{ asset("assets/vendor/js/helpers.js") }}"></script>
     <script src="{{ asset("assets/js/config.js") }}"></script>
     @yield("links")
+
+    <style>
+      .scroll-up {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 99;
+      }
+    </style>
 </head>
 <body>
     
@@ -42,12 +51,22 @@
             <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
                 <div class="container-xxl">
                     <div class="navbar-brand app-brand demo py-0 me-4">
+                      @student
                       <a href="{{ route("student.home") }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
                             <img src="{{ asset("favicon.png") }}" width="35" height="35" alt="Brand Logo" />
                         </span>
                         <span class="app-brand-text demo text-heading fw-bold">Archive</span>
                       </a>
+                      @endstudent
+                      @faculty
+                      <a href="{{ route("faculty.home") }}" class="app-brand-link gap-2">
+                        <span class="app-brand-logo demo">
+                            <img src="{{ asset("favicon.png") }}" width="35" height="35" alt="Brand Logo" />
+                        </span>
+                        <span class="app-brand-text demo text-heading fw-bold">Archive</span>
+                      </a>
+                      @endfaculty
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
@@ -87,10 +106,18 @@
                                     <div class="dropdown-divider"></div>
                                   </li>
                                   <li>
+                                    @student
                                     <a class="dropdown-item" href="{{ route("student.logout") }}">
                                       <i class="mdi mdi-logout me-2"></i>
                                       <span class="align-middle">Log Out</span>
                                     </a>
+                                    @endstudent
+                                    @faculty
+                                    <a class="dropdown-item" href="{{ route("faculty.logout") }}">
+                                      <i class="mdi mdi-logout me-2"></i>
+                                      <span class="align-middle">Log Out</span>
+                                    </a>
+                                    @endfaculty
                                   </li>
                                 </ul>
                             </li>
@@ -114,7 +141,7 @@
                               <script>
                                 document.write(new Date().getFullYear());
                               </script>
-                              , Archive Management System
+                              , Archive Management System, Alright Reserved.
                             </div>
                             <div class="d-none d-lg-inline-block">
                               <a
@@ -134,6 +161,10 @@
         </div>
     </div>
 
+    <button type="button" class="btn btn-primary d-none btn-icon scroll-up">
+      <i class="mdi mdi-arrow-up"></i>
+    </button>
+
     <script src="{{ asset("assets/vendor/libs/jquery/jquery.js") }}"></script>
     <script src="{{ asset("assets/vendor/libs/popper/popper.js") }}"></script>
     <script src="{{ asset("assets/vendor/js/bootstrap.js") }}"></script>
@@ -142,8 +173,23 @@
     <script src="{{ asset("assets/vendor/libs/hammer/hammer.js") }}"></script>
     <script src="{{ asset("assets/vendor/libs/typeahead-js/typeahead.js") }}"></script>
     <script src="{{ asset("assets/vendor/js/menu.js") }}"></script>
-    <script src="{{ asset("assets/js/main.js") }}"></script>
 
     @yield("scripts")
+
+    <script src="{{ asset("assets/js/main.js") }}"></script>
+    <script>
+      $(window).on("scroll", function() {
+        if ($(this).scrollTop() > 400) {
+          $(".scroll-up").removeClass("d-none")
+          $(".scroll-up").fadeIn();
+        }else {
+          $(".scroll-up").addClass("d-none")
+          $(".scroll-up").fadeOut();
+        }
+      })
+      $('.scroll-up').on('click', function () {
+        $('html, body').animate({ scrollTop: 0 }, 75);
+      });
+    </script>
 </body>
 </html>

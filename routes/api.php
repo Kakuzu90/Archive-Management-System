@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DownloadController;
+use App\Http\Controllers\Api\LoadReviewController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::as("api.")
         Route::get("user/search", [SearchController::class, "search"])->name("search");
     });
 
-   Route::get("book/{book}/download", DownloadController::class)->name("book.download");
+    Route::get("book/{book}/reviews", LoadReviewController::class)->name("book.reviews");
+    Route::get("book/{book}/download", DownloadController::class)->name("book.download");
 
 });

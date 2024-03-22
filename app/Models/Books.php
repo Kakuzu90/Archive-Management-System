@@ -54,7 +54,7 @@ class Books extends Model
     }
 
     public function average() {
-        return number_format($this->reviews()->avg("rate"), "1", ".");
+        return $this->reviews()->avg("rate") > 0 ? number_format($this->reviews()->avg("rate"), "1", ".") : 0;
     }
 
     public function getRatingPercentage() {
@@ -87,7 +87,7 @@ class Books extends Model
 
     public function scopeAccepted($query) {
         $query->where("book_status", self::ACCEPTED);
-        if (Auth::user()->isAdmin()) {
+        if (!Auth::user()->isSuperAdmin()) {
             $query->where("college_id", Auth::user()->college_id);
         }
         return $query;

@@ -32,6 +32,6 @@ class BookDownload extends Model
     }
 
     public function scopeIsNotAlreadyDownloaded($query, $id) {
-        return $query->where("book_id", $id)->where("user_id", Auth::id())->doesnExist();
+        return $query->where("book_id", $id)->where("user_id", Auth::id())->doesntExist();
     }
 }

@@ -100,6 +100,14 @@ class User extends Authenticatable
     public function isAdmin() {
         return $this->role_id === Role::ADMIN;
     }
+
+    public function isStudent() {
+        return $this->role_id === Role::STUDENT;
+    }
+
+    public function isFaculty() {
+        return $this->role_id === Role::FACULTY;
+    }
     
     public function college() {
         return $this->belongsTo(College::class);

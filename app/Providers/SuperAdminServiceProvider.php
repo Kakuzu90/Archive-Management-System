@@ -33,5 +33,13 @@ class SuperAdminServiceProvider extends ServiceProvider
         Blade::if("admin", function () {
             return Auth::check() && Auth::user()->isAdmin();
         });
+
+        Blade::if("faculty", function () {
+            return Auth::check() && Auth::user()->isFaculty();
+        });
+
+        Blade::if("student", function () {
+            return Auth::check() && Auth::user()->isStudent();
+        });
     }
 }

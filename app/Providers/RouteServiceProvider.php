@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Books;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +50,44 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+        });
+
+        Route::bind("book", function($value) {
+            if (!Auth::user()->isSuperAdmin()) {
+                return Books::where("id", $value)
+                        ->where("college_id", Auth::user()->college_id)
+                        ->firstOrFail();
+            }
+            return Books::findOrFail($value);
+        });
+
+        Route::bind("pdf", function($value) {
+            if (!Auth::user()->isSuperAdmin()) {
+                return Books::where("slug", $value)
+                        ->where("college_id", Auth::user()->college_id)
+                        ->firstOrFail();
+            }
+            return Books::where("slug", $value)->firstOrFail();
+        });
+
+        Route::bind("faculty", function($value) {
+            if (Auth::user()->isAdmin()) {
+                return User::where("id", $value)
+                        ->where("role_id", Role::FACULTY)
+                        ->where("college_id", Auth::user()->college_id)
+                        ->firstOrFail();
+            }
+            return User::findOrFail($value);
+        });
+
+        Route::bind("student", function($value) {
+            if (Auth::user()->isAdmin()) {
+                return User::where("id", $value)
+                        ->where("role_id", Role::STUDENT)
+                        ->where("college_id", Auth::user()->college_id)
+                        ->firstOrFail();
+            }
+            return User::findOrFail($value);
         });
     }
 

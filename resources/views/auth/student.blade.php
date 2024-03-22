@@ -192,7 +192,7 @@
 
               <div class="my-3">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
+                  <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" required />
                   <label class="form-check-label" for="terms-conditions">
                     I agree to
                     <a href="javascript:void(0);">privacy policy & terms</a>

@@ -94,7 +94,7 @@ Route::middleware("auth")
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
             Route::get("home", [StudentHomeController::class,"index"])->name("home");
-            Route::get("book/{book}", [StudentHomeController::class,"book"])->name("book");
+            Route::get("book/{pdf:slug}", [StudentHomeController::class,"book"])->name("book");
 
     });
 

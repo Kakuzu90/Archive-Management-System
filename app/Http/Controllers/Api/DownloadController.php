@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 class DownloadController extends Controller
 {
     public function __invoke(Books $book) {
-        if (Auth::user()->college_id === $book->college_id || in_array(Auth::user()->role_id, [Role::ADMIN, Role::SUPER_ADMIN])) {
+        if (Auth::user()->isSuperAdmin() || (Auth::user()->college_id === $book->college_id || Auth::user()->isAdmin())) {
 
             if (!in_array(Auth::user()->role_id, [Role::ADMIN, Role::SUPER_ADMIN]) && BookDownload::isNotAlreadyDownloaded($book->id)) {
                 BookDownload::create(["user_id" => Auth::id(), "book_id" => $book->id]);
