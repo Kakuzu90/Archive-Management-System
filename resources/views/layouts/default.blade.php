@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" href="{{ asset("assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/libs/typeahead-js/typeahead.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/libs/toastr/toastr.css") }}">
 
     <script src="{{ asset("assets/vendor/js/helpers.js") }}"></script>
     <script src="{{ asset("assets/js/config.js") }}"></script>
@@ -51,26 +52,21 @@
             <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
                 <div class="container-xxl">
                     <div class="navbar-brand app-brand demo py-0 me-4">
-                      @student
-                      <a href="{{ route("student.home") }}" class="app-brand-link gap-2">
+                      <a href="{{ changeRoute("student.home") }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
                             <img src="{{ asset("favicon.png") }}" width="35" height="35" alt="Brand Logo" />
                         </span>
-                        <span class="app-brand-text demo text-heading fw-bold">Archive</span>
+                        <span class="app-brand-text demo text-heading fw-bold d-md-block d-none">Archive</span>
                       </a>
-                      @endstudent
-                      @faculty
-                      <a href="{{ route("faculty.home") }}" class="app-brand-link gap-2">
-                        <span class="app-brand-logo demo">
-                            <img src="{{ asset("favicon.png") }}" width="35" height="35" alt="Brand Logo" />
-                        </span>
-                        <span class="app-brand-text demo text-heading fw-bold">Archive</span>
-                      </a>
-                      @endfaculty
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <li class="nav-item me-2">
+                              <a href="{{ changeRoute("student.my-books.create") }}" class="nav-link">
+                                <i class="mdi mdi-notebook-plus mdi-24px"></i>
+                              </a>
+                            </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                   <div class="avatar avatar-online">
@@ -97,7 +93,7 @@
                                     <div class="dropdown-divider"></div>
                                   </li>
                                   <li>
-                                    <a class="dropdown-item" href="pages-profile-user.html">
+                                    <a class="dropdown-item" href="{{ changeRoute("student.profile.index") }}">
                                       <i class="mdi mdi-account-outline me-2"></i>
                                       <span class="align-middle">My Profile</span>
                                     </a>
@@ -106,18 +102,10 @@
                                     <div class="dropdown-divider"></div>
                                   </li>
                                   <li>
-                                    @student
-                                    <a class="dropdown-item" href="{{ route("student.logout") }}">
+                                    <a class="dropdown-item" href="{{ changeRoute("student.logout") }}">
                                       <i class="mdi mdi-logout me-2"></i>
                                       <span class="align-middle">Log Out</span>
                                     </a>
-                                    @endstudent
-                                    @faculty
-                                    <a class="dropdown-item" href="{{ route("faculty.logout") }}">
-                                      <i class="mdi mdi-logout me-2"></i>
-                                      <span class="align-middle">Log Out</span>
-                                    </a>
-                                    @endfaculty
                                   </li>
                                 </ul>
                             </li>
@@ -173,8 +161,11 @@
     <script src="{{ asset("assets/vendor/libs/hammer/hammer.js") }}"></script>
     <script src="{{ asset("assets/vendor/libs/typeahead-js/typeahead.js") }}"></script>
     <script src="{{ asset("assets/vendor/js/menu.js") }}"></script>
+    <script src="{{ asset("assets/vendor/libs/toastr/toastr.js") }}"></script>
 
+    @include("toastr")
     @yield("scripts")
+
 
     <script src="{{ asset("assets/js/main.js") }}"></script>
     <script>

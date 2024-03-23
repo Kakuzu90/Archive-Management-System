@@ -89,6 +89,10 @@ class RouteServiceProvider extends ServiceProvider
             }
             return User::findOrFail($value);
         });
+
+        Route::bind("my_book", function($value) {
+            return Books::where("user_id", Auth::id())->where("slug", $value)->firstOrFail();
+        });
     }
 
     /**

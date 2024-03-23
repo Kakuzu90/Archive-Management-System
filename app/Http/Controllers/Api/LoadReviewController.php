@@ -12,7 +12,7 @@ class LoadReviewController extends Controller
     public function __invoke(Books $book, Request $request) {
         $page = $request->input("page", 1);
         $perPage = 5;
-        $data = BookReview::where("book_id", $book->id)->skip(($page - 1) * $perPage)->take($perPage)->get();
+        $data = BookReview::where("book_id", $book->id)->skip(($page - 1) * $perPage)->take($perPage)->latest()->get();
 
         $results = $data->map(function ($item) {
             $content = '<div class="col-12"><div class="card"><div class="card-body"><div class="d-flex justify-content-start"><div class="avatar"><img src="'.$item->user->avatar().'" class="rounded-circle" alt="Avatar" /></div>';

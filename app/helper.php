@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Books;
 use App\Models\Course;
 use App\Models\College;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists("isActive")) {
@@ -42,9 +43,32 @@ if (!function_exists("getColleges")) {
 
 if (!function_exists("getCourses")) {
     function getCourses() {
-        if (Auth::user()->isAdmin()) {
+        if (!Auth::user()->isSuperAdmin()) {
             return Course::where("college_id", Auth::user()->college_id)->latest()->get();
         }
         return Course::latest()->get();
+    }
+}
+
+if (!function_exists("changeRoute")) {
+    function changeRoute(string $uri, $params = null) {
+        $role = strtolower(Auth::user()->role->name);
+        if (Auth::user()->isFaculty()) {
+            $replace = str_replace("student", $role, $uri);
+            return route($replace, $params);
+        }
+        return route($uri, $params);
+    }
+}
+
+if (!function_exists("getTerms")) {
+    function getTerms() {
+        return Setting::terms()->first();
+    }
+}
+
+if (!function_exists("getAbout")) {
+    function getAbout() {
+        return Setting::about()->first();
     }
 }

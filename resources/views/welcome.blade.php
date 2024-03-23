@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html 
     lang="en"
-    class="light-style layout-navbar-fixed layout-wide"
+    class="light-style layout-navbar-fixed customizer-hide"
     dir="ltr"
     data-theme="theme-default"
-    data-assets-path="/assets/"
+    data-assets-path="assets/"
     data-template="front-pages"
     >
 <head>
@@ -21,10 +21,73 @@
       rel="stylesheet" />
 
     <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/materialdesignicons.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/fonts/flag-icons.css") }}">
+
     <link rel="stylesheet" href="{{ asset("assets/vendor/libs/node-waves/node-waves.css") }}">
-    <link rel="stylesheet" href="{{ asset("core.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/css/rtl/core.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/css/theme-default.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/css/demo.css") }}">
+
+    <link rel="stylesheet" href="{{ asset("assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/libs/typeahead-js/typeahead.css") }}">
+
+    <link rel="stylesheet" href="{{ asset("assets/css/welcome.css") }}">
+    <script src="{{ asset("assets/vendor/js/helpers.js") }}"></script>
+    <script src="{{ asset("assets/js/config.js") }}"></script>
+
 </head>
-<body>
+<body class="bg-white">
     
+    <nav class="layout-navbar container shadow-none py-0">
+        <div class="navbar navbar-expand-lg landing-navbar border-top-0 px-3 px-md-4">
+            <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
+
+                <a href="{{ route("index") }}" class="app-brand-link">
+                    <span class="app-brand-logo demo">
+                        <a href="{{ route("index") }}" class="app-brand-link gap-2">
+                            <span class="app-brand-logo demo">
+                                <img src="{{ asset("favicon.png") }}" width="35" height="35" alt="Brand Logo" />
+                            </span>
+                            <span class="app-brand-text menu-text fw-bold ms-1 ps-1 d-md-block d-none">
+                                Digital Capstone Project Hub
+                            </span>
+                        </a>
+                    </span>
+                </a>
+            </div>
+
+            <div class="landing-menu-overlay d-lg-none"></div>
+
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item">
+                    <a class="btn btn-primary px-2 px-sm-4 px-lg-2 px-xl-4" href="{{ route("login") }}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="library-background">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">Example</p>
+                </div>
+            </div>
+        </div>
+        <div class="overlay-library"></div>
+    </div>
+
+    
+
+    <script src="{{ asset("assets/vendor/libs/jquery/jquery.js") }}"></script>
+    <script src="{{ asset("assets/vendor/libs/popper/popper.js") }}"></script>
+    <script src="{{ asset("assets/vendor/js/bootstrap.js") }}"></script>
+    <script src="{{ asset("assets/vendor/libs/node-waves/node-waves.js") }}"></script>
+    <script src="{{ asset("assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js") }}"></script>
+    <script src="{{ asset("assets/vendor/libs/hammer/hammer.js") }}"></script>
+    <script src="{{ asset("assets/vendor/libs/typeahead-js/typeahead.js") }}"></script>
+    <script src="{{ asset("assets/vendor/js/menu.js") }}"></script>
+    <script src="{{ asset("assets/js/main.js") }}"></script>
+
 </body>
 </html>

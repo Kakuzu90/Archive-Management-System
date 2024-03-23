@@ -176,7 +176,7 @@
                   <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" required />
                   <label class="form-check-label" for="terms-conditions">
                     I agree to
-                    <a href="javascript:void(0);">privacy policy & terms</a>
+                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add">privacy policy & terms</a>
                   </label>
                 </div>
               </div>
@@ -205,6 +205,8 @@
       </div>
     </div>
   </div>
+
+  @include("auth.term")
 @endsection
 
 
@@ -244,5 +246,9 @@
             return es;
           }
       });
+
+      $(document).on("click", '.btn-accept', function() {
+        $("input[name=terms]").prop("checked", true);
+      })
   </script>
 @endsection

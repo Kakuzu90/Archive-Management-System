@@ -110,12 +110,12 @@
         </div>
     </div>
 </div>
-<div class="card">
+<div class="card mb-4">
     <div class="card-header">
-        <h4 class="mb-0 card-title">Reviews</h4>
+        <h5 class="mb-0 card-title">Reviews</h5>
     </div>
     <div class="card-datatable table-responsive pt-0">
-        <table class="datatable-init table ">
+        <table class="datatable-init table">
             <thead>
                 <tr>
                     <th class="text-start">Researcher Name</th>
@@ -158,12 +158,59 @@
     </div>
 </div>
 
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0 card-title">List Who Downloaded</h5>
+    </div>
+    <div class="card-datatable table-responsive pt-0">
+        <table class="datatable-init1 table">
+            <thead>
+                <tr>
+                    <th class="text-start">Researcher Name</th>
+                    <th class="text-center">Role</th>
+                    <th class="text-center">College</th>
+                    <th class="text-center">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($book->downloads as $item)
+                    <tr>
+                        <td class="text-start">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="avatar">
+                                    <img src="{{ $item->user->avatar() }}" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                                <div class="ms-2">
+                                    <h6 class="mb-0">{{ $item->user->fullname }}</h6>
+                                    <small>{{ $item->user->username }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-{{ $item->user->roleColor() }}">{{ $item->user->role->name }}</span>
+                        </td>
+                        <td class="text-center">
+                            <span>{{ $item->user->college->name }}</span>
+                        </td>
+                        <td class="text-center">
+                            <span>{{ $item->created_at->format("F d, Y") }}</span>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
 @endsection
 
 @section("scripts")
     <script>
-         $(".datatable-init").DataTable({
-            order: [[3, "desc"], [2, "desc"]]
+        $(".datatable-init").DataTable({
+            order: [[4, "desc"]]
+        });
+        $(".datatable-init1").DataTable({
+            order: [[3, "desc"]]
          });
     </script>
 @endsection

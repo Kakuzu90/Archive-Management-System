@@ -14,7 +14,7 @@
 @endsection
 
 @section("content")
-<a href="{{ route("student.home") }}">
+<a href="{{ changeRoute("student.home") }}">
     <i class="mdi mdi-arrow-left"></i> Go back
 </a>
 
@@ -84,7 +84,7 @@
                 type="button"
                 class="btn btn-sm btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#review"
+                data-bs-target="#add"
             >
                 <i class="mdi mdi-lead-pencil me-1"></i> Write a Review
             </button>
@@ -121,7 +121,7 @@
 
     </div>
 </div>
-
+@include("user.modal.review")
 @endsection
 
 @section("scripts")
@@ -212,6 +212,13 @@
                     rtl: false,
                 });
             })
+
+            $(".set-rateyo").rateYo({
+                fullStar: true,
+                onSet: function (rating, rateYoInstance) {
+                    $("#add input[name=rate]").val(rating)
+                }
+            });
         });
     </script>
 @endsection

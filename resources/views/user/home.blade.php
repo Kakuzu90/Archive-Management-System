@@ -83,10 +83,10 @@
         </div>
     </div>
 
-    <div class="row justify-content-center mt-4">
+    <div class="row gy-4 justify-content-center mt-1">
         @forelse (getBooks() as $book)
         <div class="col-xl-3 col-lg-4 col-md-6">
-            <div class="card h-100 cursor-pointer open-book" data-route="{{ route("student.book", $book->slug) }}">
+            <div class="card h-100 cursor-pointer open-book" data-route="{{ changeRoute("student.book", $book->slug) }}">
                 <div class="card-body text-center">
                     <img src="{{ asset("assets/img/icons/pdf-1.png") }}" height="100" alt="PDF Logo"/>
                     <h6 class="fw-bold text-primary my-3">
@@ -122,7 +122,7 @@
             </div>
         </div>
         @empty
-            
+            <h1 class="text-center">No Books Available</h1>
         @endforelse
     </div>
 @endsection
@@ -142,8 +142,7 @@
             });
 
             $(document).on("click", ".open-book", function() {
-                const route = $(this).data("route")
-
+                const route = $(this).data("route");
                 window.location.assign(route);
             })
         });

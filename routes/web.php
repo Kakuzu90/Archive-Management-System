@@ -11,8 +11,11 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\BookController as ControllersBookController;
 use App\Http\Controllers\Faculty\HomeController;
+use App\Http\Controllers\Faculty\ProfileController as FacultyProfileController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
+use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Faculty;
 use App\Http\Middleware\Student;
@@ -93,8 +96,24 @@ Route::middleware("auth")
             });
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
-            Route::get("home", [StudentHomeController::class,"index"])->name("home");
-            Route::get("book/{pdf:slug}", [StudentHomeController::class,"book"])->name("book");
+
+            Route::controller(StudentHomeController::class)->group(function() {
+                Route::get("home", "index")->name("home");
+                Route::get("book/{pdf:slug}", "book")->name("book");
+                Route::post("book/{pdf:slug}/store", "store")->name("book.store");
+            });
+
+            Route::controller(StudentProfileController::class)
+                ->prefix("my-profile")->as("profile.")
+                ->group(function() {
+
+                    Route::get("/", "index")->name("index");
+                    Route::put("general", "general")->name("general");
+                    Route::patch("password", "password")->name("password");
+
+            });
+
+            Route::resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
 
     });
 
@@ -108,9 +127,30 @@ Route::middleware("auth")
             });
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
-            Route::get("home", [HomeController::class,"index"])->name("home");
+
+            Route::controller(HomeController::class)->group(function() {
+                Route::get("home", "index")->name("home");
+                Route::get("book/{pdf:slug}", "book")->name("book");
+                Route::post("book/{pdf:slug}/store", "store")->name("book.store");
+            });
+
+            Route::controller(FacultyProfileController::class)
+                ->prefix("my-profile")->as("profile.")
+                ->group(function() {
+
+                    Route::get("/", "index")->name("index");
+                    Route::put("general", "general")->name("general");
+                    Route::patch("password", "password")->name("password");
+
+            });
 
 
+            Route::resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
     });
 
+});
+
+
+Route::fallback(function() {
+    abort(404);
 });

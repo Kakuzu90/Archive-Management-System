@@ -79,7 +79,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Book File</h5>
                 </div>

@@ -1,0 +1,24 @@
+.library-background {
+    position: relative;
+    margin-top: 67px;
+    width: 100%;
+    height: calc(100vh - 67px);
+    background-image: url("/assets/img/pages/cover.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay-library {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
+}
+
+.library-background .card {
+    z-index: 2;
+    position: relative;
+}

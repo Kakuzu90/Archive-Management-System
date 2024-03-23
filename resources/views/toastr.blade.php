@@ -70,4 +70,14 @@
         });
     @enderror
 
+    @error("title")
+    toastr['error']('{{ $message }}', 'Tile Duplicate!', {
+            positionClass: 'toast-bottom-right',
+            closeButton: true,
+            tapToDismiss: false,
+            progressBar: true,
+            rtl: false
+        });
+    @enderror
+
 </script>

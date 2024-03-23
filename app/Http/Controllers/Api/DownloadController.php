@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\BookDownload;
 use App\Models\Books;
 use App\Models\Role;
@@ -17,6 +18,7 @@ class DownloadController extends Controller
 
             if (!in_array(Auth::user()->role_id, [Role::ADMIN, Role::SUPER_ADMIN]) && BookDownload::isNotAlreadyDownloaded($book->id)) {
                 BookDownload::create(["user_id" => Auth::id(), "book_id" => $book->id]);
+                $this->audit(ActivityLog::DOWNLOAD, "Downloaded a book with title of " . $book->title);
             }
 
             $path = storage_path("app/capstone/" . $book->id . ".pdf");
