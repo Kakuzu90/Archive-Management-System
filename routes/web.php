@@ -67,7 +67,7 @@ Route::middleware("auth")
 
             Route::middleware(SuperAdmin::class)->group(function() {
                 Route::apiResource("colleges", CollegeController::class);
-                Route::apiResource("courses", CourseController::class);
+                Route::apiResource("programs", CourseController::class);
                 Route::apiResource("admins", AdminController::class);
                 Route::get("settings", [SettingController::class, "index"])->name("settings.index");
                 Route::put("settings/store", [SettingController::class, "update"])->name("settings.store");

@@ -137,7 +137,7 @@
                               </option>
                             @endforeach
                           </select>
-                          <label for="course">Course</label>
+                          <label for="course">Program</label>
                         </div>
                     </div>
 

@@ -4,7 +4,7 @@
     @if (Session::get("status"))
     Welcome {{ auth()->user()->fullname }}
     @else
-    Courses
+    Programs
     @endif
 @endsection
 
@@ -14,24 +14,24 @@
 @endsection
 
 @section("content")
-<h4 class="py-3 mb-4"><span class="text-muted fw-light">Informations /</span> Courses</h4>
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Informations /</span> Programs</h4>
 
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="mb-0 card-title">Courses</h4>
+        <h4 class="mb-0 card-title">Programs</h4>
         <button
             type="button"
             class="btn btn-sm btn-primary"
             data-bs-toggle="modal" data-bs-target="#add"
         >
-            <i class="mdi mdi-plus-circle me-1"></i> New Course
+            <i class="mdi mdi-plus-circle me-1"></i> New Program
         </button>
     </div>
     <div class="card-datatable table-responsive pt-0">
         <table class="datatable-init table">
             <thead>
                 <tr>
-                    <th class="text-start">Course Name</th>
+                    <th class="text-start">Program Name</th>
                     <th class="text-center">College</th>
                     <th></th>
                 </tr>
@@ -49,14 +49,14 @@
                             <button
                                 type="button"
                                 class="edit btn btn-sm btn-icon btn-success"
-                                data-route="{{ route("admin.courses.show", $item->id) }}"
+                                data-route="{{ route("admin.programs.show", $item->id) }}"
                             >
                                 <i class="mdi mdi-pencil"></i>
                             </button>
                             <button
                                 type="button"
                                 class="delete btn btn-sm btn-icon btn-danger"
-                                data-route="{{ route("admin.courses.show", $item->id) }}"
+                                data-route="{{ route("admin.programs.show", $item->id) }}"
                                 data-title="{{ $item->name }}"
                             >
                                 <i class="mdi mdi-delete"></i>

@@ -23,16 +23,8 @@ class Course extends Model
         "deleted_at" => "date"
     ];
 
-    public function setNameAttribute($value) {
-        return $this->attributes["name"] = strtolower($value);
-    }
-
     public function setSlugAttribute($value) {
         return $this->attributes["slug"] = Str::slug($value);
-    }
-
-    public function getNameAttribute($value) {
-        return $this->attributes["name"] = ucwords($value);
     }
 
     public function college() {

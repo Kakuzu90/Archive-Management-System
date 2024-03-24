@@ -60,7 +60,7 @@
                         <span class="text-dark">{{ $book->college->name }}</span>
                     </p>
                     <p class="mb-1">
-                        <span class="fw-bold text-dark">Course: </span>
+                        <span class="fw-bold text-dark">Program: </span>
                         <span class="text-dark">{{ $book->course->name }}</span>
                     </p>
                     <p class="mb-1">

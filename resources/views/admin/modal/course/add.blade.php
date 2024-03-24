@@ -2,21 +2,21 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="addTitle">New Course</h4>
+                <h4 class="modal-title" id="addTitle">New Program</h4>
                 <button
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"></button>
             </div>
-        <form action="{{ route("admin.courses.store") }}" method="POST">
+        <form action="{{ route("admin.programs.store") }}" method="POST">
         @csrf
         <div class="modal-body">
             <div class="row">
               <div class="col-12 mb-4 mt-2">
                 <div class="form-floating form-floating-outline">
-                  <input type="text" id="course" name="name" class="form-control" placeholder="Course Name" required />
-                  <label for="course">Course Name</label>
+                  <input type="text" id="course" name="name" class="form-control" placeholder="Program Name" required />
+                  <label for="course">Program Name</label>
                 </div>
               </div>
               <div class="col-12">
@@ -42,7 +42,7 @@
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <button type="submit" class="btn btn-primary">Save Course</button>
+            <button type="submit" class="btn btn-primary">Save Program</button>
         </div>
         </form>
         </div>

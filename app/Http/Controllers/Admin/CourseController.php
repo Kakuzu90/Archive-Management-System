@@ -52,35 +52,35 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Course  $program
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Course $program)
     {
-        return $course;
+        return $program;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Course  $program
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Course $program)
     {
         $request->validate([
-            "name" => ["required", new UniqueEntry("courses", "name", $course->id)],
+            "name" => ["required", new UniqueEntry("courses", "name", $program->id)],
             "college" => "required|numeric"
         ]);
 
-        $course->update([
+        $program->update([
             "name" => $request->name, 
             "slug" => $request->name,
             "college_id" => $request->college,
         ]);
 
-        if ($course->wasChanged()) {
+        if ($program->wasChanged()) {
             $msg = ["Course Updated", $request->name . " data has been updated."];
             $this->audit(ActivityLog::EDIT, $msg[1]);
             return redirect()->back()->with("info", $msg);
@@ -92,10 +92,10 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Course  $program
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Course $course)
+    public function destroy(Request $request, Course $program)
     {
         $request->validate([
             "password" => "required"
@@ -105,8 +105,8 @@ class CourseController extends Controller
             return redirect()->back()->withErrors(["verify" => "The password is incorrect, please try again!"]);
         }
 
-        $course->update(["deleted_at" => Carbon::now()]);
-        $msg = ["Course Deleted", $course->name . " has been removed to the course data."];
+        $program->update(["deleted_at" => Carbon::now()]);
+        $msg = ["Course Deleted", $program->name . " has been removed to the course data."];
         $this->audit(ActivityLog::DELETE, $msg[1]);
         return redirect()->back()->with("danger", $msg);
     }

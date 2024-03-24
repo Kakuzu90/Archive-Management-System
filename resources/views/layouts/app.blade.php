@@ -93,10 +93,10 @@
                       </a>
                   </li>
 
-                  <li class="menu-item {{ isActive("admin.courses.index") ? 'active' : null }}">
-                      <a href="{{ route("admin.courses.index") }}" class="menu-link">
+                  <li class="menu-item {{ isActive("admin.programs.index") ? 'active' : null }}">
+                      <a href="{{ route("admin.programs.index") }}" class="menu-link">
                         <i class="menu-icon tf-icons mdi mdi-tie"></i>
-                        <div>Courses</div>
+                        <div>Programs</div>
                       </a>
                   </li>
                   @endsuperadmin

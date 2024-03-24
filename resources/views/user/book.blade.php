@@ -49,7 +49,7 @@
                     @endforeach
                 </div>
                 <p class="mb-1 text-dark">
-                    <small class="text-dark fw-bold">Course: </small>
+                    <small class="text-dark fw-bold">Program: </small>
                     <small>{{ $pdf->course->name }}</small>
                 </p>
                 <p class="mb-0">

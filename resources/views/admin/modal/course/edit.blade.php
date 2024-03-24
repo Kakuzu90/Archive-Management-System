@@ -22,7 +22,7 @@
             </div>
             <div id="form_container" class="d-none">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="editTitle">Edit Course</h4>
+                    <h4 class="modal-title" id="editTitle">Edit Program</h4>
                     <button
                       type="button"
                       class="btn-close"
@@ -33,8 +33,8 @@
                     <div class="row">
                         <div class="col-12 mb-4 mt-2">
                           <div class="form-floating form-floating-outline">
-                            <input type="text" id="course1" name="name" class="form-control" placeholder="Course Name" required />
-                            <label for="course1">Course Name</label>
+                            <input type="text" id="course1" name="name" class="form-control" placeholder="Program Name" required />
+                            <label for="course1">Program Name</label>
                           </div>
                         </div>
                         <div class="col-12">
