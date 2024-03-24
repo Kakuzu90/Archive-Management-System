@@ -15,76 +15,76 @@
 
 @section("content")
     <div class="d-flex justify-content-end align-items-center">
-        <div class="col-xl-3 col-lg-3 col-md-6 col-10 me-2">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+            <form class="d-flex" action="{{ changeRoute("student.home") }}" method="GET">
             <div class="input-group input-group-merge">
                 <span class="input-group-text" id="search-form"><i class="mdi mdi-magnify"></i></span>
                 <input
                   type="text"
                   class="form-control"
+                  name="search"
                   placeholder="Search..."
+                  value="{{ isset($_GET["search"]) ? $_GET["search"] : null }}"
                   aria-label="Search..."
                   aria-describedby="search-form" />
             </div>
-        </div>
-        <div class="btn-group">
+        
+            <div class="btn-group mx-md-2 mx-1">
+                <button
+                    type="button"
+                    class="btn btn-white border btn-icon dropdown-toggle hide-arrow"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    <i class="mdi mdi-filter-cog"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end mt-2 w-px-250 p-3">
+                    <div class="mb-1">
+                        <label class="form-label mb-1 text-dark">Year Published</label>
+                        <select
+                            class="select2 form-select"
+                            name="year"
+                        >
+                            <option value="All">All</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label mb-1 text-dark">Book Type</label>
+                        <select
+                            class="select2 form-select"
+                            name="type"
+                        >
+                            <option value="All">All</option>
+                            <option value="Thesis">Thesis</option>
+                            <option value="Capstone">Capstone</option>
+                            <option value="Masteral">Masteral</option>
+                            <option value="Doctoral">Doctoral</option>
+                        </select>
+                    </div>
+                </ul>
+            </div>
+
             <button
-                type="button"
-                class="btn btn-white border btn-icon dropdown-toggle hide-arrow"
-                data-bs-toggle="dropdown"
-                data-bs-auto-close="outside"
-                aria-haspopup="true"
-                aria-expanded="false"
+                type="submit"
+                class="btn btn-icon btn-primary"
             >
-                <i class="mdi mdi-filter-cog"></i>
+                <i class="mdi mdi-magnify"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end mt-2 w-px-250 p-3">
-                <div class="mb-1">
-                    <label class="form-label mb-1 text-dark">Year Published</label>
-                    <select
-                        class="select2 form-select"
-                    >
-                        <option value="All">All</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                    </select>
-                </div>
-                <div class="mb-1">
-                    <label class="form-label mb-1 text-dark">Book Type</label>
-                    <select
-                        class="select2 form-select"
-                    >
-                        <option value="All">All</option>
-                        <option value="Thesis">Thesis</option>
-                        <option value="Capstone">Capstone</option>
-                        <option value="Masteral">Masteral</option>
-                        <option value="Doctoral">Doctoral</option>
-                        <option value="Others">Others</option>
-                    </select>
-                </div>
-                <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-primary"
-                    >
-                        Apply
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary"
-                    >
-                        Reset
-                    </button>
-                </div>
-            </ul>
+
+            </form>
         </div>
     </div>
 
     <div class="row gy-4 justify-content-center mt-1">
-        @forelse (getBooks() as $book)
+        @forelse ($books as $book)
         <div class="col-xl-3 col-lg-4 col-md-6">
             <div class="card h-100 cursor-pointer open-book" data-route="{{ changeRoute("student.book", $book->slug) }}">
                 <div class="card-body text-center">
@@ -124,6 +124,9 @@
         @empty
             <h1 class="text-center">No Books Available</h1>
         @endforelse
+
+        @include("user.pagination", ["paginator" => $books])
+
     </div>
 @endsection
 
@@ -140,6 +143,14 @@
                     dropdownParent: $this.parent()
                 });
             });
+
+            @if (isset($_GET["year"]))
+                $("select[name=year]").val('{{ $_GET["year"] }}').trigger("change")
+            @endif
+
+            @if (isset($_GET["type"]))
+                $("select[name=type]").val('{{ $_GET["type"] }}').trigger("change")
+            @endif
 
             $(document).on("click", ".open-book", function() {
                 const route = $(this).data("route");

@@ -11,8 +11,26 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function index() {
-        return view("user.home");
+    public function index(Request $request) {
+        $query = $request->input("search");
+        $year = $request->input("year");
+        $type = $request->input("type");
+
+        $books = Books::accepted()->where("college_id", Auth::user()->college_id);
+
+        if ($query) {
+            $books->where("title", "Like", "%$query%");
+        }
+        if ($year && $year !== "All") {
+            $books->whereYear("published_at", $year);
+        }
+        if ($type && $type !== "All") {
+            $books->where("book_type", "Like", "%$type%");
+        }
+
+        $books = $books->latest()->paginate(2)->withQueryString();
+
+        return view("user.home", compact("books"));
     }
 
     public function book(Books $pdf) {

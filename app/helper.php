@@ -29,12 +29,6 @@ if (!function_exists("smartRoute")) {
     }
 }
 
-if (!function_exists("getBooks")) {
-    function getBooks() {
-        return Books::accepted()->latest()->get();
-    }
-}
-
 if (!function_exists("getColleges")) {
     function getColleges() {
         return College::latest()->get();
