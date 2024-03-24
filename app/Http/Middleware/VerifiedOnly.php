@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CreateBook
+class VerifiedOnly
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,14 @@ class CreateBook
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->canUpload() || !Auth::user()->verified_at) {
-            abort(404);
+        if (!Auth::user()->verified_at) {
+            $msg = ["Not Authorized", "You cannot access the home page if your account is not verified by the administrator."];
+            $route = redirect()->route("faculty.profile.index")->with("danger", $msg);
+            if (Auth::user()->isStudent()) {
+                $route = redirect()->route("student.profile.index")->with("danger", $msg);
+            }
+
+            return $route;
         }
 
         return $next($request);

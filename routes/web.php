@@ -21,6 +21,7 @@ use App\Http\Middleware\CreateBook;
 use App\Http\Middleware\Faculty;
 use App\Http\Middleware\Student;
 use App\Http\Middleware\SuperAdmin;
+use App\Http\Middleware\VerifiedOnly;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,7 +99,7 @@ Route::middleware("auth")
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
 
-            Route::controller(StudentHomeController::class)->group(function() {
+            Route::middleware(VerifiedOnly::class)->controller(StudentHomeController::class)->group(function() {
                 Route::get("home", "index")->name("home");
                 Route::get("book/{pdf:slug}", "book")->name("book");
                 Route::post("book/{pdf:slug}/store", "store")->name("book.store");
@@ -129,7 +130,7 @@ Route::middleware("auth")
 
             Route::get("logout", [AuthController::class, "logout"])->name("logout");
 
-            Route::controller(HomeController::class)->group(function() {
+            Route::middleware(VerifiedOnly::class)->controller(HomeController::class)->group(function() {
                 Route::get("home", "index")->name("home");
                 Route::get("book/{pdf:slug}", "book")->name("book");
                 Route::post("book/{pdf:slug}/store", "store")->name("book.store");

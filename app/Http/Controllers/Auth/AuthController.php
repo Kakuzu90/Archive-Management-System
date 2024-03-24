@@ -32,6 +32,11 @@ class AuthController extends Controller
         if (Auth::attempt(["username" => $request->username, "password" => $request->password], $request->remember)) {
             $this->audit(ActivityLog::LOGIN, "Login Success");
             if (in_array(Auth::user()->role_id, [Role::ADMIN, Role::SUPER_ADMIN])) {
+                if (!Auth::user()->verified_at) {
+                    Auth::logout();
+                    return redirect()->back()->withInput()
+                        ->withErrors(["login_failed" => "Pending account, please contact your administrator!"]);
+                }
                 return redirect()->route("admin.dashboard")->withStatus("welcome");
             }
             if (Auth::user()->role_id === Role::STUDENT) {

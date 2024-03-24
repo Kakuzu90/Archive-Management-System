@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 "role_id" => $item->role_id,
                 "year_level" => $item->year_level ?? null,
                 "avatar" => $item->avatar,
-                "verified_at" => $item->role_id === Role::ADMIN ? Carbon::now() : null,
+                "verified_at" => $item->role_id === Role::SUPER_ADMIN ? Carbon::now() : null,
             ]);
         }
     }
