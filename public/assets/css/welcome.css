@@ -26,3 +26,7 @@
     z-index: 2;
     position: relative;
 }
+.library-background p, .library-background h1 {
+    color: #fff;
+    text-align: center;
+}

@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="about-editor border-0 pb-1" id="about-editor">
-                {{ $settings[0]->context }}
+                {!! $settings[0]->context !!}
             </div>
         </div>
         <h5 class="card-title">Policy & Terms</h5>
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="terms-editor border-0 pb-1" id="terms-editor">
-                {{ $settings[1]->context }}
+                {!! $settings[1]->context !!}
             </div>
         </div>
         <form action="{{ route("admin.settings.store") }}" method="POST">

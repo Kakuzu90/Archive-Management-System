@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" href="{{ asset("assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/libs/typeahead-js/typeahead.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/vendor/libs/quill/typography.css") }}">
 
     <link rel="stylesheet" href="{{ asset("assets/css/welcome.css") }}">
     <script src="{{ asset("assets/vendor/js/helpers.js") }}"></script>
@@ -67,8 +68,8 @@
     </nav>
 
     <div class="library-background d-flex align-items-center justify-content-center flex-column">
-        <h1 class="text-white fw-bold">Digital Capstone Project Hub</h1>
-        <p class="text-white">{!! getAbout()->context !!}</p>
+        <h1 class="fw-bold">Digital Capstone Project Hub</h1>
+        {!! getAbout()->context !!}
         <h6 class="text-white mb-0">Join As</h6>
         <div class="demo-inline-spacing">
             <a href="{{ route("register.student") }}" class="btn rounded-pill btn-primary">Student</a>
