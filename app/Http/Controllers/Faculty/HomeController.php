@@ -28,7 +28,7 @@ class HomeController extends Controller
             $books->where("book_type", "Like", "%$type%");
         }
 
-        $books = $books->latest()->paginate(2)->withQueryString();
+        $books = $books->latest()->paginate(15)->withQueryString();
 
         return view("user.home", compact("books"));
     }
