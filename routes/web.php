@@ -17,6 +17,7 @@ use App\Http\Controllers\Faculty\ProfileController as FacultyProfileController;
 use App\Http\Controllers\Student\HomeController as StudentHomeController;
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\CreateBook;
 use App\Http\Middleware\Faculty;
 use App\Http\Middleware\Student;
 use App\Http\Middleware\SuperAdmin;
@@ -113,7 +114,7 @@ Route::middleware("auth")
 
             });
 
-            Route::resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
+            Route::middleware(CreateBook::class)->resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
 
     });
 

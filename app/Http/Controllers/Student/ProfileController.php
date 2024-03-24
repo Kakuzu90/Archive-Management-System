@@ -35,6 +35,7 @@ class ProfileController extends Controller
         $user = User::where("id", Auth::id())->first();
 
         $old = $user->college_id;
+        $old_year = $user->year_level;
 
         $update = [
             "first_name" => $request->first_name,
@@ -46,7 +47,7 @@ class ProfileController extends Controller
             "avatar" => $request->avatar
         ];
 
-        if ($old != $request->college) {
+        if ($old != $request->college || $old_year != $request->year) {
             $update["verified_at"] = null;
         }
 

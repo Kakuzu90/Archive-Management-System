@@ -66,13 +66,13 @@
         </div>
     </nav>
 
-    <div class="library-background">
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">Example</p>
-                </div>
-            </div>
+    <div class="library-background d-flex align-items-center justify-content-center flex-column">
+        <h1 class="text-white fw-bold">Digital Capstone Project Hub</h1>
+        <p class="text-white">{!! getAbout()->context !!}</p>
+        <h6 class="text-white mb-0">Join As</h6>
+        <div class="demo-inline-spacing">
+            <a href="{{ route("register.student") }}" class="btn rounded-pill btn-primary">Student</a>
+            <a href="{{ route("register.faculty") }}" class="btn rounded-pill btn-secondary">Faculty</a>
         </div>
         <div class="overlay-library"></div>
     </div>

@@ -62,11 +62,15 @@
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
+                          
+                            @if (Auth::user()->canUpload() || Auth::user()->isFaculty())
                             <li class="nav-item me-2">
                               <a href="{{ changeRoute("student.my-books.create") }}" class="nav-link">
                                 <i class="mdi mdi-notebook-plus mdi-24px"></i>
                               </a>
                             </li>
+                            @endif
+
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                   <div class="avatar avatar-online">

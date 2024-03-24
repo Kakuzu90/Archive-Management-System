@@ -93,6 +93,10 @@ class User extends Authenticatable
         return $query;
     }
 
+    public function canUpload() {
+        return $this->isStudent() && in_array($this->year_level, ["4th Year", "5th Year"]);
+    }
+
     public function isSuperAdmin() {
         return $this->role_id === Role::SUPER_ADMIN;
     }

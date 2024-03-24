@@ -18,7 +18,11 @@
     z-index: 1;
 }
 
-.library-background .card {
+.library-background h1, 
+.library-background .demo-inline-spacing,
+.library-background h6,
+.library-background p
+{
     z-index: 2;
     position: relative;
 }
