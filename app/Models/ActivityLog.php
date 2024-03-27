@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Scopes\Deleted;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ActivityLog extends Model
 {
@@ -39,7 +40,7 @@ class ActivityLog extends Model
     ];
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withoutGlobalScope([Deleted::class]);
     }
 
     public function typeText() {

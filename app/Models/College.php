@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\Deleted;
 use Illuminate\Support\Str;
 use App\Traits\HasDeletedScope;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,6 @@ class College extends Model
     }
 
     public function courses() {
-        return $this->hasMany(Course::class); 
+        return $this->hasMany(Course::class)->withoutGlobalScope([Deleted::class]);
     }
 }

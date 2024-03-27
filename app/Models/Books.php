@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\Deleted;
 use Illuminate\Support\Str;
 use App\Traits\HasDeletedScope;
 use Illuminate\Support\Facades\DB;
@@ -38,11 +39,11 @@ class Books extends Model
     }
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withoutGlobalScope([Deleted::class]);
     }
 
     public function course() {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class)->withoutGlobalScope([Deleted::class]);
     }
 
     public function reviews() {
@@ -78,7 +79,7 @@ class Books extends Model
     }
 
     public function college() {
-        return $this->belongsTo(College::class);
+        return $this->belongsTo(College::class)->withoutGlobalScope([Deleted::class]);
     }
 
     // public function scopeByCollege($query, $id) {

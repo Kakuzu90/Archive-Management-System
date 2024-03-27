@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\Deleted;
 use App\Traits\HasDeletedScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -114,15 +115,15 @@ class User extends Authenticatable
     }
     
     public function college() {
-        return $this->belongsTo(College::class);
+        return $this->belongsTo(College::class)->withoutGlobalScope([Deleted::class]);
     }
 
     public function books() {
-        return $this->hasMany(Books::class);
+        return $this->hasMany(Books::class)->withoutGlobalScope([Deleted::class]);
     }
 
     public function role() {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class)->withoutGlobalScope([Deleted::class]);
     }
 
     public function roleColor() {
