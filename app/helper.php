@@ -9,60 +9,89 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists("isActive")) {
-    function isActive(string $uri): bool {
-        $string = explode("|", $uri);
-        return in_array(request()->route()->getName(), $string);
-    }
+	function isActive(string $uri): bool
+	{
+		$string = explode("|", $uri);
+		return in_array(request()->route()->getName(), $string);
+	}
 }
 
 if (!function_exists("verifyMe")) {
-    function verifyMe(string $password) {
-        return password_verify($password, Auth::user()->password);
-    }
+	function verifyMe(string $password)
+	{
+		return password_verify($password, Auth::user()->password);
+	}
 }
 
 if (!function_exists("smartRoute")) {
-    function smartRoute(User $user) {
-        return $user->role_id === Role::FACULTY 
-            ? route("admin.faculty.index")
-            : route("admin.students.index");
-    }
+	function smartRoute(User $user)
+	{
+		return $user->role_id === Role::FACULTY
+			? route("admin.faculty.index")
+			: route("admin.students.index");
+	}
 }
 
 if (!function_exists("getColleges")) {
-    function getColleges() {
-        return College::latest()->get();
-    }
+	function getColleges()
+	{
+		return College::latest()->get();
+	}
 }
 
 if (!function_exists("getCourses")) {
-    function getCourses() {
-        if (!Auth::user()->isSuperAdmin()) {
-            return Course::where("college_id", Auth::user()->college_id)->latest()->get();
-        }
-        return Course::latest()->get();
-    }
+	function getCourses()
+	{
+		if (!Auth::user()->isSuperAdmin()) {
+			return Course::where("college_id", Auth::user()->college_id)->latest()->get();
+		}
+		return Course::latest()->get();
+	}
 }
 
 if (!function_exists("changeRoute")) {
-    function changeRoute(string $uri, $params = null) {
-        $role = strtolower(Auth::user()->role->name);
-        if (Auth::user()->isFaculty()) {
-            $replace = str_replace("student", $role, $uri);
-            return route($replace, $params);
-        }
-        return route($uri, $params);
-    }
+	function changeRoute(string $uri, $params = null)
+	{
+		$role = strtolower(Auth::user()->role->name);
+		if (Auth::user()->isFaculty()) {
+			$replace = str_replace("student", $role, $uri);
+			return route($replace, $params);
+		}
+		return route($uri, $params);
+	}
 }
 
 if (!function_exists("getTerms")) {
-    function getTerms() {
-        return Setting::terms()->first();
-    }
+	function getTerms()
+	{
+		return Setting::terms()->first();
+	}
 }
 
 if (!function_exists("getAbout")) {
-    function getAbout() {
-        return Setting::about()->first();
-    }
+	function getAbout()
+	{
+		return Setting::about()->first();
+	}
+}
+
+if (!function_exists("bookPending")) {
+	function bookPending()
+	{
+		return Books::pending()->count();
+	}
+}
+
+if (!function_exists("studentNotVerify")) {
+	function studentNotVerify()
+	{
+		return User::student()->whereNull("verified_at")->count();
+	}
+}
+
+if (!function_exists("facultyNotVerify")) {
+	function facultyNotVerify()
+	{
+		return User::faculty()->whereNull("verified_at")->count();
+	}
 }

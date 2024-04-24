@@ -77,6 +77,9 @@
                         <li class="d-flex align-items-center">
                             <span class="fw-medium mx-2">Status:</span> <span class="text-{{ $user->accountColor() }}">{{ $user->accountText() }}</span>
                         </li>
+												<li class="d-flex align-items-center">
+													<span class="fw-medium mx-2">Expired on:</span> <span>{{ $user->verified_till_at?->format("F d, Y") }}</span>
+												</li>
                     </ul>
 
                     <div class="d-flex justify-content-between">

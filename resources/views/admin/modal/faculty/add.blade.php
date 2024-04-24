@@ -1,5 +1,5 @@
 <div class="modal fade" id="add" tabindex="-1" aria-hidden="true" aria-describedby="addTitle">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="addTitle">New Faculty</h4>
@@ -135,6 +135,18 @@
                     <label for="avatar">Avatar</label>
                   </div>
                 </div>
+
+								<div class="col-sm-12">
+									<div class="form-floating form-floating-outline">
+										<input
+											type="text"
+											id="date_valid"
+											name="date_valid"
+											class="form-control flatpickr-human-friendly"
+											placeholder="Select a date" />
+										<label for="date_valid">Date Valid</label>
+									</div>
+								</div>
 
             </div>
         </div>

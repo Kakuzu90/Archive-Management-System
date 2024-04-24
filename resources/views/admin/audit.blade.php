@@ -75,7 +75,8 @@
 @section("scripts")
     <script>
         $(".datatable-init").DataTable({
-            order: [[5, "desc"], [0, "asc"]]
+            ordering: false,
+						lengthChange: false,
         });
     </script>
 @endsection

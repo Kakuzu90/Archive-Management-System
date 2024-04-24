@@ -10,32 +10,32 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @param  string|null  ...$guards
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
-    public function handle(Request $request, Closure $next, ...$guards)
-    {
-        $guards = empty($guards) ? [null] : $guards;
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+	 * @param  string|null  ...$guards
+	 * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+	 */
+	public function handle(Request $request, Closure $next, ...$guards)
+	{
+		$guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                if (Auth::user()->role_id === Role::ADMIN) {
-                    return redirect()->route("admin.dashboard");
-                }
-                if (Auth::user()->role_id === Role::STUDENT) {
-                    return redirect()->route("student.home");
-                }
-                if (Auth::user()->role_id === Role::FACULTY) {
-                    return redirect()->route("faculty.home");
-                }
-            }
-        }
+		foreach ($guards as $guard) {
+			if (Auth::guard($guard)->check()) {
+				if (in_array(Auth::user()->role_id, [Role::ADMIN, Role::SUPER_ADMIN])) {
+					return redirect()->route("admin.dashboard");
+				}
+				if (Auth::user()->role_id === Role::STUDENT) {
+					return redirect()->route("student.home");
+				}
+				if (Auth::user()->role_id === Role::FACULTY) {
+					return redirect()->route("faculty.home");
+				}
+			}
+		}
 
-        return $next($request);
-    }
+		return $next($request);
+	}
 }

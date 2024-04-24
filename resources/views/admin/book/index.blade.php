@@ -99,7 +99,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="delete dropdown-item" data-title="{{ $item->title }}" data-route="{{ route("admin.admins.show", $item->id) }}" href="javascript:void(0);">
+                                        <a class="delete dropdown-item" data-title="{{ $item->title }}" data-route="{{ route("admin.books.show", $item->id) }}" href="javascript:void(0);">
                                             <i class="mdi mdi-delete-empty"></i> Delete
                                         </a>
                                     </li>

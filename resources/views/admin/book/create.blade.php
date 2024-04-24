@@ -196,7 +196,7 @@
                             name="published"
                             class="form-control flatpickr-human-friendly"
                             placeholder="Select a date" />
-                          <label for="published">Date Published</label>
+                          <label for="published">Year</label>
                         </div>
                     </div>
                 </div>

@@ -154,6 +154,18 @@
                           </div>
                         </div>
 
+												<div class="col-sm-12">
+													<div class="form-floating form-floating-outline">
+														<input
+															type="text"
+															id="date_valid1"
+															name="date_valid"
+															class="form-control flatpickr-human-friendly"
+															placeholder="Select a date" />
+														<label for="date_valid1">Date Valid</label>
+													</div>
+												</div>
+
                         <div class="col-sm-12">
                             <div class="text-light small fw-medium mb-1">Account Status</div>
                             <label class="switch switch-success switch-square">

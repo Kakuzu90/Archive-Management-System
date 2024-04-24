@@ -109,6 +109,9 @@
                         <a href="{{ route("admin.books.index") }}" class="menu-link">
                           <i class="menu-icon tf-icons mdi mdi-book-account"></i>
                           <div>Books</div>
+													@if (bookPending() > 0)
+													<div class="badge bg-danger rounded-pill ms-auto">{{ bookPending() }}</div>
+													@endif
                         </a>
                     </li>
 
@@ -129,6 +132,9 @@
                         <a href="{{ route("admin.faculty.index") }}" class="menu-link">
                           <i class="menu-icon tf-icons mdi mdi-account-tie-hat"></i>
                           <div>Faculty</div>
+													@if (facultyNotVerify() > 0)
+													<div class="badge bg-danger rounded-pill ms-auto">{{ facultyNotVerify() }}</div>
+													@endif
                         </a>
                     </li>
 
@@ -136,6 +142,9 @@
                         <a href="{{ route("admin.students.index") }}" class="menu-link">
                           <i class="menu-icon tf-icons mdi mdi-account-tie"></i>
                           <div>Students</div>
+													@if (studentNotVerify() > 0)
+													<div class="badge bg-danger rounded-pill ms-auto">{{ studentNotVerify() }}</div>
+													@endif
                         </a>
                     </li>
 

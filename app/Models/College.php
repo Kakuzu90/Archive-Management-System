@@ -10,25 +10,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class College extends Model
 {
-    use HasFactory, HasDeletedScope;
+	use HasFactory, HasDeletedScope;
 
-    protected $fillable = [
-        "name", "slug", "deleted_at"
-    ];
+	protected $fillable = [
+		"name", "slug", "deleted_at"
+	];
 
-    protected $hidden = [
-        "deleted_at", "created_at", "updated_at"
-    ];
+	protected $hidden = [
+		"deleted_at", "created_at", "updated_at"
+	];
 
-    protected $casts = [
-        "deleted_at" => "date"
-    ];
+	protected $casts = [
+		"deleted_at" => "date"
+	];
 
-    public function setSlugAttribute($value) {
-        return $this->attributes["slug"] = Str::slug($value);
-    }
+	public function setSlugAttribute($value)
+	{
+		return $this->attributes["slug"] = Str::slug($value);
+	}
 
-    public function courses() {
-        return $this->hasMany(Course::class)->withoutGlobalScope([Deleted::class]);
-    }
+	public function courses()
+	{
+		return $this->hasMany(Course::class)->withoutGlobalScope(Deleted::class);
+	}
 }

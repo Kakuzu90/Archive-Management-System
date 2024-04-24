@@ -11,6 +11,7 @@
 @section("links")
     <link rel="stylesheet" href="{{ asset("assets/vendor/libs/bootstrap-select/bootstrap-select.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendor/libs/select2/select2.css") }}">
+		<link rel="stylesheet" href="{{ asset("assets/vendor/libs/flatpickr/flatpickr.css") }}">
     <style>
         .select2-selection__rendered .avatar img {
             margin-top: -19px;
@@ -102,7 +103,9 @@
 @endsection
 
 @section("scripts")
+<script src="{{ asset("assets/vendor/libs/moment/moment.js") }}"></script>
 <script src="{{ asset("assets/vendor/libs/select2/select2.js") }}"></script>
+<script src="{{ asset("assets/vendor/libs/flatpickr/flatpickr.js") }}"></script>
 <script>
     $(".datatable-init").DataTable({
         order: [[1, "asc"], [3, "asc"], [4, "desc"], [0, "asc"]]
@@ -145,6 +148,13 @@
             });
         });
     }
+
+		$('.flatpickr-human-friendly').flatpickr({
+				minDate: "today",
+				altInput: true,
+				altFormat: 'F j, Y',
+				dateFormat: 'Y-m-d'
+		});
     
 
     $(document).on("click", ".edit", function() {
@@ -174,6 +184,13 @@
                 $("#edit select[name=college]").val(response.college_id).trigger("change")
                 $("#edit select[name=year]").val(response.year_level).trigger("change")
                 $("#edit select[name=avatar]").val(response.avatar).trigger("change")
+								$("#edit input[name=date_valid]").val(response.verified_till_at)
+
+								$('.flatpickr-human-friendly').flatpickr({
+										altInput: true,
+										altFormat: 'F j, Y',
+										dateFormat: 'Y-m-d'
+								});
 
                 if (response.verified_at) {
                     $("#edit input[name=status]").prop("checked", true);

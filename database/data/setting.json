@@ -1,7 +1,7 @@
 [
     {
         "name": "System About",
-        "context": "about the system",
+        "context": "<p>about the system</p>",
         "setting_type": 3
     },
     {

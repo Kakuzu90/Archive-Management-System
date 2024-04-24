@@ -39,8 +39,9 @@
               <div class="form-floating form-floating-outline mb-3">
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control @error("login_failed") is-invalid @enderror"
                   id="email"
+									value="{{ old("username") }}"
                   name="username"
                   placeholder="Enter your username"
                   autofocus />
