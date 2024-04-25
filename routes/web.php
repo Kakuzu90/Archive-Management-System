@@ -36,123 +36,116 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware("guest")
-->controller(AuthController::class)
-->group(function () {
+	->controller(AuthController::class)
+	->group(function () {
 
-    Route::get("/", "index")->name("index");
-    Route::get("login", "loginIndex")->name("login");
-    Route::get("register-student", "registerV1")->name("register.student");
-    Route::get("register-faculty", "registerV2")->name("register.faculty");
+		Route::get("/", "index")->name("index");
+		Route::get("login", "loginIndex")->name("login");
+		Route::get("register-student", "registerV1")->name("register.student");
+		Route::get("register-faculty", "registerV2")->name("register.faculty");
 
-    Route::post("login", "login")->name("login");
-    Route::post("register-student", "submitV1")->name("register.student");
-    Route::post("register-faculty", "submitV2")->name("register.faculty");
-
-});
+		Route::post("login", "login")->name("login");
+		Route::post("register-student", "submitV1")->name("register.student");
+		Route::post("register-faculty", "submitV2")->name("register.faculty");
+	});
 
 Route::middleware("auth")
-->group(function () {
+	->group(function () {
 
-    Route::middleware(Admin::class)
-        ->prefix("administrator")
-        ->as("admin.")
-        ->group(function () {
+		Route::middleware(Admin::class)
+			->prefix("administrator")
+			->as("admin.")
+			->group(function () {
 
-            Route::get("/", function() {
-                return redirect()->route("admin.dashboard");
-            });
+				Route::get("/", function () {
+					return redirect()->route("admin.dashboard");
+				});
 
-            Route::get("logout", [AuthController::class, "logout"])->name("logout");
-            Route::get("dashboard", DashboardController::class)->name("dashboard");
+				Route::get("logout", [AuthController::class, "logout"])->name("logout");
+				Route::get("dashboard", DashboardController::class)->name("dashboard");
 
-            Route::middleware(SuperAdmin::class)->group(function() {
-                Route::apiResource("colleges", CollegeController::class);
-                Route::apiResource("programs", CourseController::class);
-                Route::apiResource("admins", AdminController::class);
-                Route::get("settings", [SettingController::class, "index"])->name("settings.index");
-                Route::put("settings/store", [SettingController::class, "update"])->name("settings.store");
-            });
+				Route::middleware(SuperAdmin::class)->group(function () {
+					Route::apiResource("colleges", CollegeController::class);
+					Route::apiResource("programs", CourseController::class);
+					Route::apiResource("admins", AdminController::class);
+					Route::get("settings", [SettingController::class, "index"])->name("settings.index");
+					Route::put("settings/store", [SettingController::class, "update"])->name("settings.store");
+				});
 
-            Route::controller(ProfileController::class)->group(function() {
-                Route::get("my-profile", "index")->name("profile.index");
-                Route::put("my-profile/general", "general")->name("profile.general");
-                Route::patch("my-profile/password", "password")->name("profile.password");
-                Route::get("my-activity-log", "logs")->name("profile.logs");
-            });
-            
-            Route::get("books/{book}/review", [BookController::class,"review"])->name("books.review");
-            Route::resource("books", BookController::class);
-            Route::apiResource("faculty", FacultyController::class);
-            Route::apiResource("students", StudentController::class);
-            Route::get("activity-logs", ActivityLogController::class)->name("activity.index");
+				Route::controller(ProfileController::class)->group(function () {
+					Route::get("my-profile", "index")->name("profile.index");
+					Route::put("my-profile/general", "general")->name("profile.general");
+					Route::patch("my-profile/password", "password")->name("profile.password");
+					Route::get("my-activity-log", "logs")->name("profile.logs");
+				});
 
-    });
+				Route::get("books/{book}/review", [BookController::class, "review"])->name("books.review");
+				Route::resource("books", BookController::class);
+				Route::apiResource("faculty", FacultyController::class);
+				Route::apiResource("students", StudentController::class);
+				Route::get("activity-logs", ActivityLogController::class)->name("activity.index");
+			});
 
-    Route::middleware(Student::class)
-        ->prefix("student")
-        ->as("student.")
-        ->group(function () {
+		Route::middleware(Student::class)
+			->prefix("student")
+			->as("student.")
+			->group(function () {
 
-            Route::get("/", function() {
-                return redirect()->route("student.home");
-            });
+				Route::get("/", function () {
+					return redirect()->route("student.home");
+				});
 
-            Route::get("logout", [AuthController::class, "logout"])->name("logout");
+				Route::get("logout", [AuthController::class, "logout"])->name("logout");
 
-            Route::middleware(VerifiedOnly::class)->controller(StudentHomeController::class)->group(function() {
-                Route::get("home", "index")->name("home");
-                Route::get("book/{pdf:slug}", "book")->name("book");
-                Route::post("book/{pdf:slug}/store", "store")->name("book.store");
-            });
+				Route::middleware(VerifiedOnly::class)->controller(StudentHomeController::class)->group(function () {
+					Route::get("home", "index")->name("home");
+					Route::get("book/{pdf:slug}", "book")->name("book");
+					Route::post("book/{pdf:slug}/store", "store")->name("book.store");
 
-            Route::controller(StudentProfileController::class)
-                ->prefix("my-profile")->as("profile.")
-                ->group(function() {
+					Route::middleware(CreateBook::class)->resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
+				});
 
-                    Route::get("/", "index")->name("index");
-                    Route::put("general", "general")->name("general");
-                    Route::patch("password", "password")->name("password");
+				Route::controller(StudentProfileController::class)
+					->prefix("my-profile")->as("profile.")
+					->group(function () {
 
-            });
+						Route::get("/", "index")->name("index");
+						Route::put("general", "general")->name("general");
+						Route::patch("password", "password")->name("password");
+					});
+			});
 
-            Route::middleware(CreateBook::class)->resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
+		Route::middleware(Faculty::class)
+			->prefix("faculty")
+			->as("faculty.")
+			->group(function () {
 
-    });
+				Route::get("/", function () {
+					return redirect()->route("faculty.home");
+				});
 
-    Route::middleware(Faculty::class)
-        ->prefix("faculty")
-        ->as("faculty.")
-        ->group(function () {
+				Route::get("logout", [AuthController::class, "logout"])->name("logout");
 
-            Route::get("/", function() {
-                return redirect()->route("faculty.home");
-            });
+				Route::middleware(VerifiedOnly::class)->controller(HomeController::class)->group(function () {
+					Route::get("home", "index")->name("home");
+					Route::get("book/{pdf:slug}", "book")->name("book");
+					Route::post("book/{pdf:slug}/store", "store")->name("book.store");
 
-            Route::get("logout", [AuthController::class, "logout"])->name("logout");
+					Route::resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
+				});
 
-            Route::middleware(VerifiedOnly::class)->controller(HomeController::class)->group(function() {
-                Route::get("home", "index")->name("home");
-                Route::get("book/{pdf:slug}", "book")->name("book");
-                Route::post("book/{pdf:slug}/store", "store")->name("book.store");
-            });
+				Route::controller(FacultyProfileController::class)
+					->prefix("my-profile")->as("profile.")
+					->group(function () {
 
-            Route::controller(FacultyProfileController::class)
-                ->prefix("my-profile")->as("profile.")
-                ->group(function() {
-
-                    Route::get("/", "index")->name("index");
-                    Route::put("general", "general")->name("general");
-                    Route::patch("password", "password")->name("password");
-
-            });
-
-
-            Route::resource("my-books", ControllersBookController::class)->except(["index", "destroy"]);
-    });
-
-});
+						Route::get("/", "index")->name("index");
+						Route::put("general", "general")->name("general");
+						Route::patch("password", "password")->name("password");
+					});
+			});
+	});
 
 
-Route::fallback(function() {
-    abort(404);
+Route::fallback(function () {
+	abort(404);
 });
