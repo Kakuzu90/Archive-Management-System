@@ -169,7 +169,7 @@
                             class="form-control human-friendly"
                             value="{{ $book->published_at }}"
                             placeholder="Select a date" />
-                          <label for="published">Date Published</label>
+                          <label for="published">Year</label>
                         </div>
                     </div>
                 </div>
