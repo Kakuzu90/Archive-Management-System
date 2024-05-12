@@ -70,7 +70,6 @@ class AuthController extends Controller
 	{
 		$request->validate([
 			"first_name" => "required",
-			"middle_name" => "required",
 			"last_name" => "required",
 			"username" => ["required", new UniqueEntry("users", "username")],
 			"password" => "required|confirmed",
@@ -101,7 +100,6 @@ class AuthController extends Controller
 	{
 		$request->validate([
 			"first_name" => "required",
-			"middle_name" => "required",
 			"last_name" => "required",
 			"username" => ["required", new UniqueEntry("users", "username")],
 			"password" => "required|confirmed",

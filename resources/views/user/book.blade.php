@@ -86,7 +86,7 @@
                 data-bs-toggle="modal"
                 data-bs-target="#add"
             >
-                <i class="mdi mdi-lead-pencil me-1"></i> Write a Review
+                <i class="mdi mdi-lead-pencil me-1"></i> Write a Feedback
             </button>
         </div>
 

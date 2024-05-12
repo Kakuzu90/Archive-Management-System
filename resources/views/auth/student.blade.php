@@ -53,6 +53,7 @@
                       name="first_name"
                       class="form-control"
                       placeholder="Enter your first name"
+											value="{{ old('first_name') }}"
                       autofocus
                       required
                       />
@@ -67,7 +68,8 @@
                       id="middle_name"
                       name="middle_name"
                       class="form-control"
-                      placeholder="Enter you middle name" required />
+											value="{{ old('middle_name') }}"
+                      placeholder="Enter you middle name" />
                     <label for="middle_name">Middle Name</label>
                   </div>
                 </div>
@@ -79,6 +81,7 @@
                       id="last_name"
                       name="last_name"
                       class="form-control"
+											value="{{ old('last_name') }}"
                       placeholder="Enter your last name" required />
                     <label for="last_name">Last Name</label>
                   </div>
@@ -90,8 +93,9 @@
                       type="text"
                       id="username"
                       name="username"
-                      class="form-control input-mask"
+                      class="form-control @error('username') is-invalid @enderror input-mask"
                       maxlength="9"
+											value="{{ old('username') }}"
                       placeholder="Enter your student id" required />
                     <label for="username">Student ID</label>
                   </div>
@@ -280,5 +284,8 @@
       $(document).on("click", '.btn-accept', function() {
         $("input[name=terms]").prop("checked", true);
       })
+			$('select[name=college]').val('{{ old("college") }}').trigger('change')
+			$('select[name=year]').val('{{ old("year") }}').trigger('change')
+			$('select[name=avatar]').val('{{ old("avatar") }}').trigger('change')
   </script>
 @endsection

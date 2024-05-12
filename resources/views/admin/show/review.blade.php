@@ -112,7 +112,7 @@
 </div>
 <div class="card mb-4">
     <div class="card-header">
-        <h5 class="mb-0 card-title">Reviews</h5>
+        <h5 class="mb-0 card-title">Researchers Feedback</h5>
     </div>
     <div class="card-datatable table-responsive pt-0">
         <table class="datatable-init table">

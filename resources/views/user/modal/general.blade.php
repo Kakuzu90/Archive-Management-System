@@ -39,7 +39,7 @@
                       class="form-control"
                       placeholder="Enter you middle name"
                       value="{{ $user->middle_name }}"
-                      required />
+                      />
                     <label for="middle_name">Middle Name</label>
                   </div>
                 </div>

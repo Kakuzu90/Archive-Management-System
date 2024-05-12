@@ -33,7 +33,6 @@ class StudentController extends Controller
 	{
 		$request->validate([
 			"first_name" => "required",
-			"middle_name" => "required",
 			"last_name" => "required",
 			"username" => ["required", new UniqueEntry("users", "username")],
 			"password" => "required|confirmed",
@@ -84,7 +83,6 @@ class StudentController extends Controller
 	{
 		$request->validate([
 			"first_name" => "required",
-			"middle_name" => "required",
 			"last_name" => "required",
 			"username" => ["required", new UniqueEntry("users", "username", $student->id)],
 			"password" => "nullable|confirmed",

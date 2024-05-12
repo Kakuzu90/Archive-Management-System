@@ -11,73 +11,77 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function index() {
-        $user = Auth::user();
-        return view("admin.profile", compact("user"));
-    }
+	public function index()
+	{
+		$user = Auth::user();
+		return view("admin.profile", compact("user"));
+	}
 
-    public function general(Request $request) {
-        $request->validate([
-            "first_name" => "required",
-            "middle_name" => "required",
-            "last_name" => "required",
-            "username" => ["required", new UniqueEntry("users", "username", Auth::id())],
-            "password" => "required"
-        ]);
+	public function general(Request $request)
+	{
+		$request->validate([
+			"first_name" => "required",
+			"last_name" => "required",
+			"username" => ["required", new UniqueEntry("users", "username", Auth::id())],
+			"password" => "required"
+		]);
 
-        if (!verifyMe($request->password)) {
-            return redirect()->back()->withErrors(["verify" => "The password is incorrect, please try again!"]);
-        }
+		if (!verifyMe($request->password)) {
+			return redirect()->back()->withErrors(["verify" => "The password is incorrect, please try again!"]);
+		}
 
-        $user = User::where("id", Auth::id())->first();
+		$user = User::where("id", Auth::id())->first();
 
-        $update = [
-            "first_name" => $request->first_name,
-            "middle_name" => $request->middle_name,
-            "last_name" => $request->last_name,
-            "username" => $request->username,
-        ];
+		$update = [
+			"first_name" => $request->first_name,
+			"middle_name" => $request->middle_name,
+			"last_name" => $request->last_name,
+			"username" => $request->username,
+		];
 
-        if ($request->filled("college") && !$user->isSuperAdmin()) {
-            $update["college_id"] = $request->college;
-        }
 
-        if ($request->filled("avatar")) {
-            $update["avatar"] = $request->avatar;
-        }
+		if ($request->filled("college") && !$user->isSuperAdmin()) {
+			$update["college_id"] = $request->college;
+		}
 
-        $user->update($update);
+		if ($request->filled("avatar")) {
+			$update["avatar"] = $request->avatar;
+		}
 
-        if ($user->wasChanged()) {
-            $msg = ["Account Updated", "You have successfully updated your account."];
-            $this->audit(ActivityLog::EDIT, "Update personal information");
-            return redirect()->back()->with("success", $msg);
-        }
+		$user->update($update);
 
-        return redirect()->back();
-    }
+		if ($user->wasChanged()) {
+			$msg = ["Account Updated", "You have successfully updated your account."];
+			$this->audit(ActivityLog::EDIT, "Update personal information");
+			return redirect()->back()->with("success", $msg);
+		}
 
-    public function password(Request $request) {
-        $request->validate([
-            "password" => "required|confirmed",
-            "old" => "required"
-        ]);
+		return redirect()->back();
+	}
 
-        if (!verifyMe($request->old)) {
-            return redirect()->back()->withErrors(["verify" => "The password is incorrect, please try again!"]);
-        }
+	public function password(Request $request)
+	{
+		$request->validate([
+			"password" => "required|confirmed",
+			"old" => "required"
+		]);
 
-        $user = User::where("id", Auth::id())->first();
-        $user->update(["password" => $request->password]);
-        $this->audit(ActivityLog::EDIT,"Update password");
-        $msg = ["Password Updated", "You have successfully updated your password."];
+		if (!verifyMe($request->old)) {
+			return redirect()->back()->withErrors(["verify" => "The password is incorrect, please try again!"]);
+		}
 
-        return redirect()->back()->with("success", $msg);
-    }
+		$user = User::where("id", Auth::id())->first();
+		$user->update(["password" => $request->password]);
+		$this->audit(ActivityLog::EDIT, "Update password");
+		$msg = ["Password Updated", "You have successfully updated your password."];
 
-    public function logs() {
-        $logs = ActivityLog::where("user_id", Auth::id())->latest()->get();
+		return redirect()->back()->with("success", $msg);
+	}
 
-        return view("admin.activity", compact("logs"));
-    }
+	public function logs()
+	{
+		$logs = ActivityLog::where("user_id", Auth::id())->latest()->get();
+
+		return view("admin.activity", compact("logs"));
+	}
 }

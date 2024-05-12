@@ -270,7 +270,7 @@
 
         new Tagify(tagifyAuthor);
         new Tagify(tagifyBook, {
-            whitelist: ["Thesis", "Capstone", "Masteral", "Doctoral"],
+            whitelist: ["Thesis", "Capstone", "Master`s Thesis", "Dissertation"],
             maxTags: 5,
             dropdown: {
                 maxItems: 10,

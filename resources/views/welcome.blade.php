@@ -68,10 +68,9 @@
     </nav>
 
     <div class="library-background d-flex align-items-center justify-content-center flex-column">
-        <h1 class="fw-bold">Digital Capstone Project Hub</h1>
+        <h1 class="fw-bold" style="font-family: serif;">Digital Capstone Project Hub</h1>
         <div class="col-md-6 col-11 mx-auto text-center">
-            {!! getAbout()->context !!}
-            <h6 class="text-white mb-0">Join As</h6>
+            <h6 class="text-white mb-0">Register As</h6>
             <div class="demo-inline-spacing">
                 <a href="{{ route("register.student") }}" class="btn rounded-pill btn-primary">Student</a>
                 <a href="{{ route("register.faculty") }}" class="btn rounded-pill btn-secondary">Faculty</a>

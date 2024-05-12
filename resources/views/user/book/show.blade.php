@@ -79,7 +79,7 @@
         </div>
     </div>
     <div class="col-md-10 col-12 mx-md-auto order-3">
-        <h5 class="card-title text-dark mb-3">Reviews</h5>
+        <h5 class="card-title text-dark mb-3">Researchers Feedback</h5>
         <div class="row gy-3" id="review-section">
             @foreach ($reviews as $item)
             <div class="col-12">

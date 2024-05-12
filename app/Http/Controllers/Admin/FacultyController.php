@@ -33,7 +33,6 @@ class FacultyController extends Controller
 	{
 		$request->validate([
 			"first_name" => "required",
-			"middle_name" => "required",
 			"last_name" => "required",
 			"username" => ["required", new UniqueEntry("users", "username")],
 			"password" => "required|confirmed",
@@ -83,7 +82,6 @@ class FacultyController extends Controller
 	{
 		$request->validate([
 			"first_name" => "required",
-			"middle_name" => "required",
 			"last_name" => "required",
 			"username" => ["required", new UniqueEntry("users", "username", $faculty->id)],
 			"password" => "nullable|confirmed",
@@ -91,6 +89,10 @@ class FacultyController extends Controller
 			"avatar" => "required|numeric",
 			"date_valid" => "required|date|date_format:Y-m-d"
 		]);
+
+		if ($request->filled("middle_name")) {
+			$update["middle_name"] = $request->middle_name;
+		}
 
 		$update = [
 			"first_name" => $request->first_name,
