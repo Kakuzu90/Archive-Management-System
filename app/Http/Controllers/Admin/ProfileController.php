@@ -50,6 +50,13 @@ class ProfileController extends Controller
 
 		$user->update($update);
 
+		if ($user->wasChanged(['college_id'])) {
+			$user->update([
+				"verified_till_at" => NULL,
+				"verified_at" => NULL,
+			]);
+		}
+
 		if ($user->wasChanged()) {
 			$msg = ["Account Updated", "You have successfully updated your account."];
 			$this->audit(ActivityLog::EDIT, "Update personal information");
